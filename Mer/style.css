@@ -223,4 +223,63 @@ body{
 	body{
    background-image: url("img/rectangle-2.png");
  }
+
+ 
+}
+
+@media screen and (max-height: 640px) and (max-width: 1136px) and (orientation: landscape){
+
+.Block {
+width: 536px;
+padding-bottom: 48px;
+margin: 120px auto 0px auto;
+}
+
+.InputEmail {
+margin: 32px 0px 0px 0px;
+width: 488px;
+}
+
+.InputPassword {
+margin: 24px 0px 0px 0px;
+}
+
+.ErrorMessage {
+width: 488px;
+padding: 12px 6px 8px 14px;
+}
+
+.Button {
+margin: 40px 0px 0px 0px;
+}
+
+.ErrorText {
+font-size: 12px;
+}
+
+.W-Mercury-Development {
+height: 40px;
+top: 45px;
+}
+
+.Head {
+padding-top: 32px;
+height: 24px;
+font-size: 20px;
+letter-spacing: normal;
+}
+
+.Name {
+padding-top: 24px;
+height: 21px;
+font-size: 18px;
+letter-spacing: 0.2px;
+}
+
+.Image {
+width: 86px;
+height: 86px;
+margin-top: 32px;
+}
+
 }
