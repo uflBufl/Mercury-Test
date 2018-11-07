@@ -19,6 +19,9 @@ function getXmlHttp() {
 }
 
 function logIn(){
+  document.getElementById("login").setAttribute("disabled", "disabled");
+  document.getElementById("password").setAttribute("disabled", "disabled");
+  document.getElementById("login_button").setAttribute("disabled", "disabled");
 	var login = document.getElementById("login").value;
   var password = document.getElementById("password").value;
   var xmlhttp = getXmlHttp();
@@ -46,6 +49,9 @@ function logIn(){
       document.location="profile.html?name="+user.name+"&photoUrl="+user.photoUrl;
     }
   }
+  document.getElementById("login").removeAttribute("disabled");
+  document.getElementById("password").removeAttribute("disabled");
+document.getElementById("login_button").removeAttribute("disabled");
 };
 }
 
