@@ -27,7 +27,16 @@ function logIn(){
   xmlhttp.send('{ "email": "' + login + '", "password": "' + password+'" }');
   xmlhttp.onreadystatechange = function() {
     if (xmlhttp.readyState == 4) {
+      if(xmlhttp.status == 0) {
+        document.getElementById("error").placeholder="No internet connection";
+      document.getElementById("error").style="display: inline-block;";
+    }
+    if(xmlhttp.status == 503) {
+        document.getElementById("error").placeholder="Server is temporarily unavailable";
+      document.getElementById("error").style="display: inline-block;";
+    }
      if(xmlhttp.status == 400) {
+      document.getElementById("error").placeholder="E-Mail or password is incorrect";
       document.getElementById("error").style="display: inline-block;";
       document.getElementById("login").classList.add("error");
       document.getElementById("password").value = "";
