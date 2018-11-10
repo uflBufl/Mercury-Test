@@ -18,41 +18,63 @@ function getXmlHttp() {
   return xmlhttp;
 }
 
-function logIn(){
+
+
+let p = new Promise((resolve, reject) => {
+  // то же что reject(new Error("o_O"))
+  resolve("It's Okay");
+})
+
+
+
+
+
+async function logIn(){
+
   document.getElementById("login").setAttribute("disabled", "disabled");
   document.getElementById("password").setAttribute("disabled", "disabled");
   document.getElementById("login_button").setAttribute("disabled", "disabled");
-	var login = document.getElementById("login").value;
-  var password = document.getElementById("password").value;
-  var xmlhttp = getXmlHttp();
-  xmlhttp.open('POST', 'https://us-central1-mercdev-academy.cloudfunctions.net/login', true);
-  xmlhttp.setRequestHeader('Content-Type', 'application/json');
-  xmlhttp.send('{ "email": "' + login + '", "password": "' + password+'" }');
-  xmlhttp.onreadystatechange = function() {
-    if (xmlhttp.readyState == 4) {
-      if(xmlhttp.status == 0) {
+
+  let pp = new Promise((resolve, reject) => {
+    var login = document.getElementById("login").value;
+    var password = document.getElementById("password").value;
+    var xmlhttp = getXmlHttp();
+    xmlhttp.open('POST', 'https://us-central1-mercdev-academy.cloudfunctions.net/login', true);
+    xmlhttp.setRequestHeader('Content-Type', 'application/json');
+    xmlhttp.send('{ "email": "' + login + '", "password": "' + password+'" }');
+    xmlhttp.onreadystatechange = function() {
+      if (xmlhttp.readyState == 4) {
+        resolve(xmlhttp);
+      }
+    };
+
+  })
+
+  let result = await pp;
+  if(result.status == 200){
+    var user = JSON.parse(result.responseText);
+      document.location="profile.html?name="+user.name+"&photoUrl="+user.photoUrl;
+  }
+  if(result.status == 0) {
         document.getElementById("error").placeholder="No internet connection";
       document.getElementById("error").style="display: inline-block;";
     }
-    if(xmlhttp.status == 503) {
+    if(result.status == 503) {
         document.getElementById("error").placeholder="Server is temporarily unavailable";
       document.getElementById("error").style="display: inline-block;";
     }
-     if(xmlhttp.status == 400) {
+     if(result.status == 400) {
       document.getElementById("error").placeholder="E-Mail or password is incorrect";
       document.getElementById("error").style="display: inline-block;";
       document.getElementById("login").classList.add("error");
       document.getElementById("password").value = "";
     }
-    if(xmlhttp.status == 200) {
-      var user = JSON.parse(xmlhttp.responseText);
-      document.location="profile.html?name="+user.name+"&photoUrl="+user.photoUrl;
-    }
-  }
+
+
   document.getElementById("login").removeAttribute("disabled");
   document.getElementById("password").removeAttribute("disabled");
-document.getElementById("login_button").removeAttribute("disabled");
-};
+  document.getElementById("login_button").removeAttribute("disabled");
+
 }
 
 function OnLoad() {
