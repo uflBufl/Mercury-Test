@@ -33,7 +33,19 @@
   background-color: rgba(237, 65, 89, 0.25);
   padding: 11px 0px 9px 16px;
 }
-
+.NewError{
+    display: none;
+    box-sizing: border-box;
+    border: 0;
+    background-color: rgba(237, 65, 89, 0.25);
+    margin-left: auto;
+    margin-right: auto;
+    width: 503px;
+    height: 40px;
+    border-radius: 4px;
+    padding: 11px 0px 9px 16px;
+    text-align: left;
+}
 .AllText{
   font-size: 14px;
   font-weight: 500;
@@ -161,23 +173,33 @@ body{
 @media screen and (max-width: 640px){
 
   .Block {
-    width: 288px;
+    width: unset;
     padding-bottom: 48px;
-    margin: 120px auto 0px auto;
+    margin: 120px 16px 0px 16px;
   }
 
   .InputEmail {
-   margin: 32px 0px 0px 0px;
-   width: 240px;
+   margin: 32px 24px 0px 24px;
+   width: calc(100% - 48px);
  }
 
  .InputPassword {
    margin: 24px 0px 0px 0px;
  }
 
- .ErrorMessage {
-  width: 240px;
+.NewError{
+    width: calc(100% - 48px);
   padding: 12px 6px 8px 14px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.InputText {
+  padding: 14px 16px;
+  opacity: 0.8;
+  font-size: 16px;
+  color: #262626;
+  width: 100%
+  margin-right: 19px;
 }
 
 .Button {
@@ -229,57 +251,59 @@ body{
 
 @media screen and (max-height: 640px) and (max-width: 1136px) and (orientation: landscape){
 
-.Block {
-width: 536px;
-padding-bottom: 48px;
-margin: 120px auto 0px auto;
+  .Block {
+    width: unset;
+    padding-bottom: 48px;
+    margin: 120px 16px 0px 16px;
+  }
+
+  .InputEmail {
+    margin: 32px 24px 0px 24px;
+    width: calc(100% - 48px);
+  }
+
+  .InputPassword {
+    margin: 24px 0px 0px 0px;
+  }
+
+  .NewError{
+    width: calc(100% - 48px);
+  padding: 12px 6px 8px 14px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.InputEmail {
-margin: 32px 0px 0px 0px;
-width: 488px;
-}
+  .Button {
+    margin: 40px 0px 0px 0px;
+  }
 
-.InputPassword {
-margin: 24px 0px 0px 0px;
-}
+  .ErrorText {
+    font-size: 12px;
+  }
 
-.ErrorMessage {
-width: 488px;
-padding: 12px 6px 8px 14px;
-}
+  .W-Mercury-Development {
+    height: 40px;
+    top: 45px;
+  }
 
-.Button {
-margin: 40px 0px 0px 0px;
-}
+  .Head {
+    padding-top: 32px;
+    height: 24px;
+    font-size: 20px;
+    letter-spacing: normal;
+  }
 
-.ErrorText {
-font-size: 12px;
-}
+  .Name {
+    padding-top: 24px;
+    height: 21px;
+    font-size: 18px;
+    letter-spacing: 0.2px;
+  }
 
-.W-Mercury-Development {
-height: 40px;
-top: 45px;
-}
-
-.Head {
-padding-top: 32px;
-height: 24px;
-font-size: 20px;
-letter-spacing: normal;
-}
-
-.Name {
-padding-top: 24px;
-height: 21px;
-font-size: 18px;
-letter-spacing: 0.2px;
-}
-
-.Image {
-width: 86px;
-height: 86px;
-margin-top: 32px;
-}
+  .Image {
+    width: 86px;
+    height: 86px;
+    margin-top: 32px;
+  }
 
 }

@@ -30,7 +30,6 @@ let p = new Promise((resolve, reject) => {
 
 
 async function logIn(){
-
   document.getElementById("login").setAttribute("disabled", "disabled");
   document.getElementById("password").setAttribute("disabled", "disabled");
   document.getElementById("login_button").setAttribute("disabled", "disabled");
@@ -53,22 +52,22 @@ async function logIn(){
   let result = await pp;
   if(result.status == 200){
     var user = JSON.parse(result.responseText);
-      document.location="profile.html?name="+user.name+"&photoUrl="+user.photoUrl;
+    document.location="profile.html?name="+user.name+"&photoUrl="+user.photoUrl;
   }
   if(result.status == 0) {
-        document.getElementById("error").placeholder="No internet connection";
-      document.getElementById("error").style="display: inline-block;";
-    }
-    if(result.status == 503) {
-        document.getElementById("error").placeholder="Server is temporarily unavailable";
-      document.getElementById("error").style="display: inline-block;";
-    }
-     if(result.status == 400) {
-      document.getElementById("error").placeholder="E-Mail or password is incorrect";
-      document.getElementById("error").style="display: inline-block;";
-      document.getElementById("login").classList.add("error");
-      document.getElementById("password").value = "";
-    }
+    document.getElementById("errortext").textContent="No internet connection";
+    document.getElementById("error").style="display: inline-block;";
+  }
+  if(result.status == 503) {
+    document.getElementById("errortext").textContent="Server is temporarily unavailable";
+    document.getElementById("error").style="display: inline-block;";
+  }
+  if(result.status == 400) {
+    document.getElementById("errortext").textContent="E-Mail or password is incorrect";
+    document.getElementById("error").style="display: inline-block;";
+    document.getElementById("login").classList.add("error");
+    document.getElementById("password").value = "";
+  }
 
 
   document.getElementById("login").removeAttribute("disabled");

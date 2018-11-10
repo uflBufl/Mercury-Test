@@ -8,6 +8,7 @@
 	<link rel="stylesheet" href="style.css" type="text/css" />
 
 	<script src="scripts.js" defer></script>
+
 </head>
 <body>
 
@@ -21,7 +22,9 @@
 
 			<input type="password" name="password" id = "password" class = "InputEmail InputPassword InputText AllText" placeholder="Password">
 
-			<input type="text" id = "error" name="error" class="ErrorMessage InputPassword ErrorText AllText" placeholder="E-Mail or password is incorrect" readonly>
+			<div class = "InputPassword ErrorText AllText NewError" id = "error" name="error">
+				<span id = "errortext" name = "errortext">E-Mail or password is incorrect</span>
+			</div>
 
 			<input type="submit" name="login_button" id = "login_button" class = "Button ButtonText AllText" value = "Login">
 		</form>
