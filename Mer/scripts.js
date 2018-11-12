@@ -1,15 +1,18 @@
 "use strict";
 
-async function request(url, options){
+async function request(url, options) {
   const response = await fetch(url, options);
-  const status = await response.status;
-  if(response){
-    return response;
-  }
-  else{
-    throw new Error(response);
+  const json = await response.json();
+  if (response.ok) {
+    return json;
+  } else {
+    throw {
+      error: json.error,
+      status: response.status
+    };
   }
 }
+
 
 async function logIn(){
   document.getElementById("login").setAttribute("disabled", "disabled");
@@ -30,10 +33,10 @@ async function logIn(){
 
     })
 
-    if(response.status == 200){
-      var user = await response.json();
-      document.location="profile.html?name="+user.name+"&photoUrl="+user.photoUrl;
-    }
+    document.location="profile.html?name="+response.name+"&photoUrl="+response.photoUrl;
+
+  } catch(response){
+
     if(response.status == 0) {
       document.getElementById("errortext").textContent="No internet connection";
       document.getElementById("error").style="display: inline-block;";
@@ -48,11 +51,10 @@ async function logIn(){
       document.getElementById("login").classList.add("error");
       document.getElementById("password").value = "";
     }
-
-  } catch(e){
-    document.getElementById("errortext").textContent="Some kind of mistake";
-    document.getElementById("error").style="display: inline-block;";
-
+    else{
+      document.getElementById("errortext").textContent=response.error;
+      document.getElementById("error").style="display: inline-block;";
+    }
   }
 
   document.getElementById("login").removeAttribute("disabled");

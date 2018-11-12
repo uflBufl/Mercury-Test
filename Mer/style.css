@@ -177,7 +177,14 @@ body{
     padding-bottom: 48px;
     margin: 120px 16px 0px 16px;
   }
-
+.InputText {
+  padding: 14px 16px;
+  opacity: 0.8;
+  font-size: 16px;
+  color: #262626;
+  width: 100%;
+  margin-right: 19px;
+}
   .InputEmail {
    margin: 32px 24px 0px 24px;
    width: calc(100% - 48px);
@@ -192,14 +199,6 @@ body{
   padding: 12px 6px 8px 14px;
   margin-left: auto;
   margin-right: auto;
-}
-.InputText {
-  padding: 14px 16px;
-  opacity: 0.8;
-  font-size: 16px;
-  color: #262626;
-  width: 100%
-  margin-right: 19px;
 }
 
 .Button {
