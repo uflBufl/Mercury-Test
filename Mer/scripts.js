@@ -13,54 +13,52 @@ async function request(url, options) {
   }
 }
 
-
-async function logIn(){
+async function logIn() {
   document.getElementById("login").setAttribute("disabled", "disabled");
   document.getElementById("password").setAttribute("disabled", "disabled");
   document.getElementById("login_button").setAttribute("disabled", "disabled");
 
   var login = document.getElementById("login").value;
   var password = document.getElementById("password").value;
-  var url = 'https://us-central1-mercdev-academy.cloudfunctions.net/login';
+  var url = "https://us-central1-mercdev-academy.cloudfunctions.net/login";
 
-  try{
+  try {
     const response = await request(url, {
       method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json"
       },
-      body: JSON.stringify({email: login, password: password})
+      body: JSON.stringify({ email: login, password: password })
+    });
 
-    })
-
-    document.location="profile.html?name="+response.name+"&photoUrl="+response.photoUrl;
-
-  } catch(response){
-
-    if(response.status == 0) {
-      document.getElementById("errortext").textContent="No internet connection";
-      document.getElementById("error").style="display: inline-block;";
+    document.location =
+      "profile.html?name=" + response.name + "&photoUrl=" + response.photoUrl;
+  } catch (response) {
+    if (response.status == 0) {
+      document.getElementById("errortext").textContent =
+        "No internet connection";
+      document.getElementById("error").style = "display: inline-block;";
     }
-    if(response.status == 503) {
-      document.getElementById("errortext").textContent="Server is temporarily unavailable";
-      document.getElementById("error").style="display: inline-block;";
+    if (response.status == 503) {
+      document.getElementById("errortext").textContent =
+        "Server is temporarily unavailable";
+      document.getElementById("error").style = "display: inline-block;";
     }
-    if(response.status == 400) {
-      document.getElementById("errortext").textContent="E-Mail or password is incorrect";
-      document.getElementById("error").style="display: inline-block;";
+    if (response.status == 400) {
+      document.getElementById("errortext").textContent =
+        "E-Mail or password is incorrect";
+      document.getElementById("error").style = "display: inline-block;";
       document.getElementById("login").classList.add("error");
       document.getElementById("password").value = "";
-    }
-    else{
-      document.getElementById("errortext").textContent=response.error;
-      document.getElementById("error").style="display: inline-block;";
+    } else {
+      document.getElementById("errortext").textContent = response.error;
+      document.getElementById("error").style = "display: inline-block;";
     }
   }
 
   document.getElementById("login").removeAttribute("disabled");
   document.getElementById("password").removeAttribute("disabled");
   document.getElementById("login_button").removeAttribute("disabled");
-
 }
 
 function OnLoad() {
@@ -71,12 +69,15 @@ function OnLoad() {
 
   document.getElementById("UsName").innerHTML = decodeURIComponent(name);
   document.getElementById("photo").src = decodeURIComponent(photoUrl);
-
 }
 
 function getUrlVars() {
   var vars = {};
-  var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+  var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(
+    m,
+    key,
+    value
+  ) {
     vars[key] = value;
   });
   return vars;
