@@ -7,35 +7,21 @@
 
   <link rel="stylesheet" href="style.css" type="text/css" />
 
-  <style type="text/css">
-
-  .Button {
-    width: 154px;
-    margin: 56px 0px 0px 0px;
-  }
-
-  @media screen and (max-width: 640px){
-    .Button {
-      width: 154px;
-    }
-  }
-
-</style> 
 <script src="scripts.js" defer></script>
 </head>
 <body onload="OnLoad()">
 
 	<img src="img/w-mercury-development.svg"
-	class="W-Mercury-Development">
+	class="logo">
 
- <div class="Block">
+ <div class="block">
   <form action="login.html" method="GET">
-    <img src="man.jpg"
-    class="Image" id="photo">
+    <img src="img/man.jpg"
+    class="block__img" id="photo">
 
-    <h1 class = "Name Head" id = "UsName"></h1>
+    <h1 class = "block__headline block__headline_name" id = "UsName"></h1>
 
-    <input type="submit"  class = "Button ButtonText AllText" value = "Logout">
+    <input type="submit"  class = "form form__button form__button_profile" value = "Logout">
 
   </form>
 

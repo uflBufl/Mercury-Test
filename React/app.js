@@ -1,55 +1,80 @@
 // function InputEmailFunction() {
-//   return <input type="email" name="login" id = "login" className = "InputEmail InputText AllText" placeholder="E-Mail" /> ;
+//   return (
+//     <input
+//       type="email"
+//       name="login"
+//       id="login"
+//       className="form__input"
+//       placeholder="E-Mail"
+//     />
+//   );
 // }
 
 // function InputPasswordFunction() {
-//   return <input type="password" name="password" id = "password" className = "InputEmail InputPassword InputText AllText" placeholder="Password" /> ;
+//   return (
+//     <input
+//       type="password"
+//       name="password"
+//       id="password"
+//       className="form__input form__input_password"
+//       placeholder="Password"
+//     />
+//   );
 // }
 
 // function ErrorFunction() {
-//   return <div className = "InputPassword ErrorText AllText NewError" id = "error" name="error">
-//         <span id = "errortext" name = "errortext">E-Mail or password is incorrect</span>
-//       </div> ;
+//   return (
+//     <div className="form__error" id="error" name="error">
+//       <span id="errortext" name="errortext">
+//         E-Mail or password is incorrect
+//       </span>
+//     </div>
+//   );
 // }
 
 // function ButtonFunction() {
-//   return <input type="submit" name="login_button" id = "login_button" className = "Button ButtonText AllText" value = "Login" /> ;
+//   return (
+//     <input
+//       type="submit"
+//       name="login_button"
+//       id="login_button"
+//       className="form__button"
+//       value="Login"
+//     />
+//   );
 // }
 
 // function BlockFunction() {
-//   return <div className="Block">
-//       <h1 className = "Head">Log In</h1>
-//       <form>
-
-//           <InputEmailFunction />
-//           <InputPasswordFunction />
-//           <ErrorFunction />
-//           <ButtonFunction />
-
+//   return (
+//     <div className="block">
+//       <h1 className="block__headline">Log In</h1>
+//       <form className="form">
+//         <InputEmailFunction />
+//         <InputPasswordFunction />
+//         <ErrorFunction />
+//         <ButtonFunction />
 //       </form>
-
-//     </div> ;
+//     </div>
+//   );
 // }
 
 // ReactDOM.render(
 //   <div>
-//     <img src="img/w-mercury-development.svg"
-//     className="W-Mercury-Development" />
+//     <img src="img/w-mercury-development.svg" className="logo" />
 
-//           <BlockFunction />
-
+//     <BlockFunction />
 //   </div>,
 //   document.getElementById("root")
-//   );
+// );
 
-"use strict";
+("use strict");
 
 function InputEmailFunction() {
   return React.createElement("input", {
     type: "email",
     name: "login",
     id: "login",
-    className: "InputEmail InputText AllText",
+    className: "form__input",
     placeholder: "E-Mail"
   });
 }
@@ -59,7 +84,7 @@ function InputPasswordFunction() {
     type: "password",
     name: "password",
     id: "password",
-    className: "InputEmail InputPassword InputText AllText",
+    className: "form__input form__input_password",
     placeholder: "Password"
   });
 }
@@ -68,7 +93,7 @@ function ErrorFunction() {
   return React.createElement(
     "div",
     {
-      className: "InputPassword ErrorText AllText NewError",
+      className: "form__error",
       id: "error",
       name: "error"
     },
@@ -85,7 +110,7 @@ function ButtonFunction() {
     type: "submit",
     name: "login_button",
     id: "login_button",
-    className: "Button ButtonText AllText",
+    className: "form__button",
     value: "Login"
   });
 }
@@ -93,11 +118,11 @@ function ButtonFunction() {
 function BlockFunction() {
   return React.createElement(
     "div",
-    { className: "Block" },
-    React.createElement("h1", { className: "Head" }, "Log In"),
+    { className: "block" },
+    React.createElement("h1", { className: "block__headline" }, "Log In"),
     React.createElement(
       "form",
-      null,
+      { className: "form" },
       React.createElement(InputEmailFunction, null),
       React.createElement(InputPasswordFunction, null),
       React.createElement(ErrorFunction, null),
@@ -112,7 +137,7 @@ ReactDOM.render(
     null,
     React.createElement("img", {
       src: "img/w-mercury-development.svg",
-      className: "W-Mercury-Development"
+      className: "logo"
     }),
     React.createElement(BlockFunction, null)
   ),

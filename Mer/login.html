@@ -13,20 +13,20 @@
 <body>
 
 	<img src="img/w-mercury-development.svg"
-	class="W-Mercury-Development">
+	class="logo">
 
-	<div class="Block">
-		<h1 class = "Head">Log In</h1>
-		<form onsubmit="logIn();return false" >
-			<input onclick="remove()" type="email" name="login" id = "login" class = "InputEmail InputText AllText" placeholder="E-Mail">
+	<div class="block">
+		<h1 class = "block__headline">Log In</h1>
+		<form onsubmit="logIn();return false" class = "form" >
+			<input onclick="remove()" type="email" name="login" id = "login" class = "form__input" placeholder="E-Mail">
 
-			<input type="password" name="password" id = "password" class = "InputEmail InputPassword InputText AllText" placeholder="Password">
+			<input type="password" name="password" id = "password" class = "form__input form__input_password" placeholder="Password">
 
-			<div class = "InputPassword ErrorText AllText NewError" id = "error" name="error">
+			<div class = "form__error" id = "error" name="error">
 				<span id = "errortext" name = "errortext">E-Mail or password is incorrect</span>
 			</div>
 
-			<input type="submit" name="login_button" id = "login_button" class = "Button ButtonText AllText" value = "Login">
+			<input type="submit" name="login_button" id = "login_button" class = "form__button" value = "Login">
 		</form>
 
 	</div>
