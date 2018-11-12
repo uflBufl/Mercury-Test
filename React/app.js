@@ -42,44 +42,59 @@
 //   document.getElementById("root")
 //   );
 
-
-
-
 "use strict";
 
 function InputEmailFunction() {
-  return React.createElement("input", { type: "email", name: "login", id: "login", className: "InputEmail InputText AllText", placeholder: "E-Mail" });
+  return React.createElement("input", {
+    type: "email",
+    name: "login",
+    id: "login",
+    className: "InputEmail InputText AllText",
+    placeholder: "E-Mail"
+  });
 }
 
 function InputPasswordFunction() {
-  return React.createElement("input", { type: "password", name: "password", id: "password", className: "InputEmail InputPassword InputText AllText", placeholder: "Password" });
+  return React.createElement("input", {
+    type: "password",
+    name: "password",
+    id: "password",
+    className: "InputEmail InputPassword InputText AllText",
+    placeholder: "Password"
+  });
 }
 
 function ErrorFunction() {
   return React.createElement(
     "div",
-    { className: "InputPassword ErrorText AllText NewError", id: "error", name: "error" },
+    {
+      className: "InputPassword ErrorText AllText NewError",
+      id: "error",
+      name: "error"
+    },
     React.createElement(
       "span",
       { id: "errortext", name: "errortext" },
       "E-Mail or password is incorrect"
-      )
-    );
+    )
+  );
 }
 
 function ButtonFunction() {
-  return React.createElement("input", { type: "submit", name: "login_button", id: "login_button", className: "Button ButtonText AllText", value: "Login" });
+  return React.createElement("input", {
+    type: "submit",
+    name: "login_button",
+    id: "login_button",
+    className: "Button ButtonText AllText",
+    value: "Login"
+  });
 }
 
 function BlockFunction() {
   return React.createElement(
     "div",
     { className: "Block" },
-    React.createElement(
-      "h1",
-      { className: "Head" },
-      "Log In"
-      ),
+    React.createElement("h1", { className: "Head" }, "Log In"),
     React.createElement(
       "form",
       null,
@@ -87,15 +102,19 @@ function BlockFunction() {
       React.createElement(InputPasswordFunction, null),
       React.createElement(ErrorFunction, null),
       React.createElement(ButtonFunction, null)
-      )
-    );
+    )
+  );
 }
 
-ReactDOM.render(React.createElement(
-  "div",
-  null,
-  React.createElement("img", { src: "img/w-mercury-development.svg",
-    className: "W-Mercury-Development" }),
-  React.createElement(BlockFunction, null)
-  ), document.getElementById("root"));
-
+ReactDOM.render(
+  React.createElement(
+    "div",
+    null,
+    React.createElement("img", {
+      src: "img/w-mercury-development.svg",
+      className: "W-Mercury-Development"
+    }),
+    React.createElement(BlockFunction, null)
+  ),
+  document.getElementById("root")
+);
