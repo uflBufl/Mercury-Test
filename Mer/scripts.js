@@ -1,74 +1,59 @@
 "use strict";
 
-/* Данная функция создаёт кроссбраузерный объект XMLHTTP */
-function getXmlHttp() {
-  var xmlhttp;
-  try {
-    xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
-  } catch (e) {
-    try {
-      xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-    } catch (E) {
-      xmlhttp = false;
-    }
+async function request(url, options){
+  const response = await fetch(url, options);
+  const status = await response.status;
+  if(response){
+    return response;
   }
-  if (!xmlhttp && typeof XMLHttpRequest!='undefined') {
-    xmlhttp = new XMLHttpRequest();
+  else{
+    throw new Error(response);
   }
-  return xmlhttp;
 }
-
-
-
-let p = new Promise((resolve, reject) => {
-  // то же что reject(new Error("o_O"))
-  resolve("It's Okay");
-})
-
-
-
-
 
 async function logIn(){
   document.getElementById("login").setAttribute("disabled", "disabled");
   document.getElementById("password").setAttribute("disabled", "disabled");
   document.getElementById("login_button").setAttribute("disabled", "disabled");
 
-  let pp = new Promise((resolve, reject) => {
-    var login = document.getElementById("login").value;
-    var password = document.getElementById("password").value;
-    var xmlhttp = getXmlHttp();
-    xmlhttp.open('POST', 'https://us-central1-mercdev-academy.cloudfunctions.net/login', true);
-    xmlhttp.setRequestHeader('Content-Type', 'application/json');
-    xmlhttp.send('{ "email": "' + login + '", "password": "' + password+'" }');
-    xmlhttp.onreadystatechange = function() {
-      if (xmlhttp.readyState == 4) {
-        resolve(xmlhttp);
-      }
-    };
+  var login = document.getElementById("login").value;
+  var password = document.getElementById("password").value;
+  var url = 'https://us-central1-mercdev-academy.cloudfunctions.net/login';
 
-  })
+  try{
+    const response = await request(url, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({email: login, password: password})
 
-  let result = await pp;
-  if(result.status == 200){
-    var user = JSON.parse(result.responseText);
-    document.location="profile.html?name="+user.name+"&photoUrl="+user.photoUrl;
-  }
-  if(result.status == 0) {
-    document.getElementById("errortext").textContent="No internet connection";
-    document.getElementById("error").style="display: inline-block;";
-  }
-  if(result.status == 503) {
-    document.getElementById("errortext").textContent="Server is temporarily unavailable";
-    document.getElementById("error").style="display: inline-block;";
-  }
-  if(result.status == 400) {
-    document.getElementById("errortext").textContent="E-Mail or password is incorrect";
-    document.getElementById("error").style="display: inline-block;";
-    document.getElementById("login").classList.add("error");
-    document.getElementById("password").value = "";
-  }
+    })
 
+    if(response.status == 200){
+      var user = await response.json();
+      document.location="profile.html?name="+user.name+"&photoUrl="+user.photoUrl;
+    }
+    if(response.status == 0) {
+      document.getElementById("errortext").textContent="No internet connection";
+      document.getElementById("error").style="display: inline-block;";
+    }
+    if(response.status == 503) {
+      document.getElementById("errortext").textContent="Server is temporarily unavailable";
+      document.getElementById("error").style="display: inline-block;";
+    }
+    if(response.status == 400) {
+      document.getElementById("errortext").textContent="E-Mail or password is incorrect";
+      document.getElementById("error").style="display: inline-block;";
+      document.getElementById("login").classList.add("error");
+      document.getElementById("password").value = "";
+    }
+
+  } catch(e){
+    document.getElementById("errortext").textContent="Some kind of mistake";
+    document.getElementById("error").style="display: inline-block;";
+
+  }
 
   document.getElementById("login").removeAttribute("disabled");
   document.getElementById("password").removeAttribute("disabled");
