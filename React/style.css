@@ -43,7 +43,7 @@
   margin-top: 48px;
 }
 
-.form{
+.form {
   font-size: 14px;
   font-weight: 500;
   font-style: normal;
@@ -65,13 +65,13 @@
   font-size: 16px;
   color: #262626;
 }
-.form__input:focus{
+.form__input:focus {
   border-color: rgba(151, 151, 151, 0.25);
 }
 .form__input_password {
   margin: 32px 0px 0px 0px;
 }
-.form__error{
+.form__error {
   margin: 32px 0px 0px 0px;
   display: none;
   box-sizing: border-box;
@@ -99,8 +99,8 @@
   text-align: center;
   color: #ffffff;
 }
-.form__button:hover{
-	box-shadow: 0 6px 20px 0 rgba(237, 65, 89, 0.4);
+.form__button:hover {
+  box-shadow: 0 6px 20px 0 rgba(237, 65, 89, 0.4);
   background-color: #ffffff;
   color: #ed4159;
 }
@@ -109,46 +109,48 @@
   background-color: #ffffff;
   color: #ed4159;
 }
-.form__button_profile{
+.form__button_profile {
   width: 154px;
   margin: 56px 0px 0px 0px;
 }
 
-#placeholder{
-	opacity: 0.4;
+#placeholder {
+  opacity: 0.4;
 }
-#error::placeholder{
+#error::placeholder {
   color: #ed4159;
   opacity: 1;
   height: 20px;
 }
 
-.error{
-	border-color: #ed4159;
-	color: #ed4159;
+.errorChange {
+  border-color: #ed4159;
+  color: #ed4159;
 }
-.error:focus{
+.errorChange:focus {
   border-color: rgba(151, 151, 151, 0.25);
   color: #262626;
 }
 
-form{
+form {
   text-align: center;
 }
-body{
-	font-family: 'Gotham';
+body {
+  font-family: "Gotham";
 
-	/* задаем фоновое изображение, если браузер не поддерживает image-set */
-	background-image: url("img/background.jpg");
-	/* задаем фоновые изображения, для различных разрешений */
-	background-image: -webkit-image-set(url("img/background.jpg") 1x, url("img/background@2x.jpg") 2x, url("img/background@3x.jpg 3x"));
+  /* задаем фоновое изображение, если браузер не поддерживает image-set */
+  background-image: url("img/background.jpg");
+  /* задаем фоновые изображения, для различных разрешений */
+  background-image: -webkit-image-set(
+    url("img/background.jpg") 1x,
+    url("img/background@2x.jpg") 2x,
+    url("img/background@3x.jpg 3x")
+  );
 
-	margin: 0;
+  margin: 0;
 }
 
-
-@media screen and (max-width: 640px){
-
+@media screen and (max-width: 640px) {
   .logo {
     height: 40px;
     top: 45px;
@@ -184,7 +186,7 @@ body{
   .form__input_password {
     margin: 24px 0px 0px 0px;
   }
-  .form__error{
+  .form__error {
     margin: 24px 0px 0px 0px;
     width: calc(100% - 48px);
     padding: 12px 6px 8px 14px;
@@ -195,26 +197,22 @@ body{
   .form__button {
     margin: 40px 0px 0px 0px;
   }
-  .form__button_profile{
+  .form__button_profile {
     width: 154px;
   }
 
-  body{
+  body {
     background-image: url("img/rectangle-2@2x.png");
   }
-
 }
 
-@media screen and (max-width: 320px){
-
-	body{
+@media screen and (max-width: 320px) {
+  body {
     background-image: url("img/rectangle-2.png");
   }
- 
 }
 
-@media screen and (max-height: 640px) and (max-width: 1136px) and (orientation: landscape){
-
+@media screen and (max-height: 640px) and (max-width: 1136px) and (orientation: landscape) {
   .logo {
     height: 40px;
     top: 45px;
@@ -250,7 +248,7 @@ body{
   .form__input_password {
     margin: 24px 0px 0px 0px;
   }
-  .form__error{
+  .form__error {
     margin: 24px 0px 0px 0px;
     width: calc(100% - 48px);
     padding: 12px 6px 8px 14px;
@@ -261,8 +259,7 @@ body{
   .form__button {
     margin: 40px 0px 0px 0px;
   }
-  .form__button_profile{
+  .form__button_profile {
     width: 154px;
   }
-
 }
