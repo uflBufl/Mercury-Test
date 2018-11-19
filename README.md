@@ -20,7 +20,7 @@ npm install
 <li>2. Run babel to transform JSX to JS:</li>
 npx babel app.jsx --plugins @babel/plugin-transform-react-jsx --out-file app.js --watch
 <li>3. Open index.html in your browser</li>
-<p>
+
 The screen from the phone:
 ![Скриншот с телефона](React/image.png)
 
