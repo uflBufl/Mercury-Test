@@ -21,7 +21,7 @@ npm install
 npx babel app.jsx --plugins @babel/plugin-transform-react-jsx --out-file app.js --watch
 <li>3. Open index.html in your browser</li>
 
-""
+   
 Скрин с телефона:
 ![Скриншот с телефона](React/image.png)
 
