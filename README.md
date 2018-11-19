@@ -8,7 +8,7 @@ git clone https://github.com/akuznetsov-md/learn-react.git
 <li>2. Open project's folder in terminal</li>
 cd ./Mercury-Test/React
 
-<li>3. Checkout classes/4 branch<li>
+<li>3. Checkout classes/4 branch</li>
 git checkout classes/4
 
 <li>4. Make sure you have Node.js installed</li>
