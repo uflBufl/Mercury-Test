@@ -21,8 +21,8 @@ npm install
 npx babel app.jsx --plugins @babel/plugin-transform-react-jsx --out-file app.js --watch
 <li>3. Open index.html in your browser</li>
 
-   
-Скрин с телефона:
+<p>
+Скрин с телефона:</p>
 ![Скриншот с телефона](React/image.png)
 
 Запуск на мобильном устройстве был совершён с помощью сервера xampp по локальной сети.
