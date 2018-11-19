@@ -112,7 +112,7 @@ class App extends React.Component {
       borderColor: "#ed4159",
       color: "#ed4159"
     };
-
+    
     if (this.state.user) {
       return (
         <div>

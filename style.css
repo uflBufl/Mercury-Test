@@ -1,3 +1,23 @@
+@font-face {
+  font-family: "Gotham";
+  src: url("../font/GothamPro.ttf");
+  src: url("../font/GothamPro.ttf") format("truetype");
+
+  font-weight: normal;
+
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Gotham";
+  src: url("../font/GothamPro-Bold.ttf");
+  src: url("../font/GothamPro-Bold.ttf") format("truetype");
+
+  font-weight: bold;
+
+  font-style: normal;
+}
+
 .logo {
   width: 100%;
   height: 69px;
