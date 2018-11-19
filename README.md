@@ -3,7 +3,7 @@
 <h1>Build custom React step by step.</h1>
 <h2>Setup</h2>
 <li>1. Clone repo</li>
-git clone https://github.com/akuznetsov-md/learn-react.git
+git clone https://github.com/uflBufl/Mercury-Test.git
 
 <li>2. Open project's folder in terminal</li>
 cd ./Mercury-Test/React
