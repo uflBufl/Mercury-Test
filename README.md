@@ -20,8 +20,8 @@ npm install
 <li>2. Run babel to transform JSX to JS:</li>
 npx babel app.jsx --plugins @babel/plugin-transform-react-jsx --out-file app.js --watch
 <li>3. Open index.html in your browser</li>
-<p></p>
-Скрин с телефона:
+<p>
+The screen from the phone:
 ![Скриншот с телефона](React/image.png)
 
-Запуск на мобильном устройстве был совершён с помощью сервера xampp по локальной сети.
+The launch on the mobile device was made using the xampp server on the local network.
