@@ -8,12 +8,9 @@ git clone https://github.com/uflBufl/Mercury-Test.git
 <li>2. Open project's folder in terminal</li>
 cd ./Mercury-Test/React
 
-<li>3. Checkout classes/4 branch</li>
-git checkout classes/4
+<li>3. Make sure you have Node.js installed</li>
 
-<li>4. Make sure you have Node.js installed</li>
-
-<li>5. Install project's dependencies:</li>
+<li>4. Install project's dependencies:</li>
 npm install
 <h2>Run</h2>
 <li>1. Open project's folder in terminal</li>
