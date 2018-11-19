@@ -6,7 +6,7 @@
 git clone https://github.com/uflBufl/Mercury-Test.git
 
 <li>2. Open project's folder in terminal</li>
-cd ./Mercury-Test/React
+cd ./Mercury-Test
 
 <li>3. Make sure you have Node.js installed</li>
 
@@ -25,6 +25,6 @@ npx babel app.jsx --plugins @babel/plugin-transform-react-jsx --out-file app.js 
 
 
 The screen from the phone:
-![Скриншот с телефона](React/image.png)
+![Скриншот с телефона](image.png)
 
 The launch on the mobile device was made using the xampp server on the local network.
