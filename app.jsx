@@ -11,15 +11,15 @@ async function request(url, options) {
   }
 }
 
-function LogoFunction(props) {
+function Logo(props) {
   return <img src="img/w-mercury-development.svg" className="logo" />;
 }
 
-function LogoutImgFunction(props) {
+function LogoutImg(props) {
   return <img src={props.user.photoUrl} className="block__img" id="photo" />;
 }
 
-function LogoutHeadFunction(props) {
+function LogoutHead(props) {
   return (
     <h1 className="block__headline block__headline_name" id="UsName">
       {props.user.name}
@@ -27,21 +27,7 @@ function LogoutHeadFunction(props) {
   );
 }
 
-class LogoutHeadClass extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <h1 className="block__headline block__headline_name" id="UsName">
-        {this.props.user.name}
-      </h1>
-    );
-  }
-}
-
-class LogoutButtonClass extends React.Component {
+class LogoutButton extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -57,7 +43,7 @@ class LogoutButtonClass extends React.Component {
   }
 }
 
-class LoginButtonClass extends React.Component {
+class LoginButton extends React.Component {
   constructor(props) {
     super(props);
 
@@ -80,7 +66,7 @@ class LoginButtonClass extends React.Component {
   }
 }
 
-class ErrorClass extends React.Component {
+class Error extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -105,58 +91,22 @@ class ErrorClass extends React.Component {
   }
 }
 
-class InputPasswordClass extends React.Component {
+class Input extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      password: this.props.password,
-      IsLock: false
+      type: this.props.type,
+      value: this.props.value
     };
 
-    this.handleChangePassword = this.handleChangePassword.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChangePassword(e) {
-    this.props.handleChangePassword(e);
+  handleChange(e) {
+    this.props.handleChange(e);
     this.setState({
-      password: e.target.value
-    });
-  }
-
-  render() {
-    return (
-      <input
-        type="password"
-        name="password"
-        id="password"
-        className="form__input form__input_password"
-        placeholder="Password"
-        disabled={this.props.IsLock}
-        onChange={this.handleChangePassword}
-        value={this.props.password}
-      />
-    );
-  }
-}
-
-class InputLoginClass extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      email: "user@example.com",
-      IsLock: this.props.IsLock,
-      IsRed: this.props.IsRed
-    };
-
-    this.handleChangeEmail = this.handleChangeEmail.bind(this);
-  }
-
-  handleChangeEmail(e) {
-    this.props.handleChangeEmail(e);
-    this.setState({
-      email: e.target.value
+      value: e.target.value
     });
   }
 
@@ -169,21 +119,23 @@ class InputLoginClass extends React.Component {
     return (
       <input
         onClick={this.props.removeRedColor}
-        type="email"
-        name="login"
-        id="login"
-        className="form__input"
-        placeholder="E-Mail"
-        onChange={this.handleChangeEmail}
-        value={this.state.email}
+        type={this.state.type}
+        className={
+          this.props.type == "password"
+            ? "form__input form__input_password"
+            : "form__input"
+        }
+        placeholder={this.props.type == "password" ? "Password" : "E-Mail"}
         disabled={this.props.IsLock}
+        onChange={this.handleChange}
+        value={this.state.value}
         style={this.props.IsRed == true ? errorChange : {}}
       />
     );
   }
 }
 
-class LogInClass extends React.Component {
+class LogIn extends React.Component {
   constructor(props) {
     super(props);
 
@@ -274,27 +226,30 @@ class LogInClass extends React.Component {
   render() {
     return (
       <div>
-        <LogoFunction />
+        <Logo />
 
         <div className="block">
           <h1 className="block__headline">Log In</h1>
           <form onSubmit={this.logIn} className="form">
-            {React.createElement(InputLoginClass, {
-              removeRedColor: this.removeRedColor,
-              IsRed: this.state.IsRed,
-              IsLock: this.state.IsLock,
-              handleChangeEmail: this.handleChangeEmail
-            })}
+            <Input
+              type="email"
+              removeRedColor={this.removeRedColor}
+              value="user@example.com"
+              IsRed={this.state.IsRed}
+              IsLock={this.state.IsLock}
+              handleChange={this.handleChangeEmail}
+            />
 
-            {React.createElement(InputPasswordClass, {
-              password: this.state.password,
-              IsLock: this.state.IsLock,
-              handleChangePassword: this.handleChangePassword
-            })}
+            <Input
+              type="password"
+              value={this.state.password}
+              IsLock={this.state.IsLock}
+              handleChange={this.handleChangePassword}
+            />
 
-            {React.createElement(ErrorClass, { error: this.state.error })}
+            <Error error={this.state.error} />
 
-            {React.createElement(LoginButtonClass, { lock: this.state.IsLock })}
+            <LoginButton lock={this.state.IsLock} />
           </form>
         </div>
       </div>
@@ -302,7 +257,7 @@ class LogInClass extends React.Component {
   }
 }
 
-class LogOutClass extends React.Component {
+class LogOut extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -310,7 +265,7 @@ class LogOutClass extends React.Component {
   render() {
     return (
       <div>
-        <LogoFunction />
+        <Logo />
 
         <div className="block">
           <form
@@ -318,11 +273,11 @@ class LogOutClass extends React.Component {
             method="GET"
             onSubmit={this.props.clickLogout}
           >
-            <LogoutImgFunction user={this.props.user} />
+            <LogoutImg user={this.props.user} />
 
-            <LogoutHeadFunction user={this.props.user} />
+            <LogoutHead user={this.props.user} />
 
-            {React.createElement(LogoutButtonClass)}
+            <LogoutButton />
           </form>
         </div>
       </div>
@@ -354,12 +309,9 @@ class App extends React.Component {
 
   render() {
     if (this.state.user) {
-      return React.createElement(LogOutClass, {
-        user: this.state.user,
-        clickLogout: this.clickLogout
-      });
+      return <LogOut clickLogout={this.clickLogout} user={this.state.user} />;
     }
-    return React.createElement(LogInClass, { clickLogin: this.clickLogin });
+    return <LogIn clickLogin={this.clickLogin} />;
   }
 }
 
