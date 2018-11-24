@@ -1,4 +1,4 @@
-async function request(url, options) {
+async function sendRequest(url, options) {
   const response = await fetch(url, options);
   const json = await response.json();
 
@@ -10,6 +10,19 @@ async function request(url, options) {
       status: response.status
     };
   }
+}
+
+class Panel extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return React.createElement("div", {
+      className: "block"
+    }, this.props.children);
+  }
+
 }
 
 function Logo(props) {
@@ -34,37 +47,21 @@ function LogoutHead(props) {
   }, props.user.name);
 }
 
-class LogoutButton extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return React.createElement("input", {
-      type: "submit",
-      className: "form form__button form__button_profile",
-      value: "Logout"
-    });
-  }
-
-}
-
-class LoginButton extends React.Component {
+class Button extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      IsLock: false
+      form: this.props.form,
+      isDisabled: false
     };
   }
 
   render() {
     return React.createElement("input", {
       type: "submit",
-      name: "login_button",
-      id: "login_button",
-      className: "form__button",
-      disabled: this.props.IsLock,
-      value: "Login"
+      className: this.props.form == "login" ? "form__button" : "form form__button form__button_profile",
+      disabled: this.props.isDisabled,
+      value: this.props.form == "login" ? "Login" : "Logout"
     });
   }
 
@@ -100,11 +97,11 @@ class Input extends React.Component {
       type: this.props.type,
       value: this.props.value
     };
-    this.handleChange = this.handleChange.bind(this);
+    this.handleChangeValue = this.handleChangeValue.bind(this);
   }
 
-  handleChange(e) {
-    this.props.handleChange(e);
+  handleChangeValue(e) {
+    this.props.handleChangeValue(e);
     this.setState({
       value: e.target.value
     });
@@ -116,14 +113,14 @@ class Input extends React.Component {
       color: "#ed4159"
     };
     return React.createElement("input", {
-      onClick: this.props.removeRedColor,
+      onClick: this.props.removeInvalid,
       type: this.state.type,
       className: this.props.type == "password" ? "form__input form__input_password" : "form__input",
       placeholder: this.props.type == "password" ? "Password" : "E-Mail",
-      disabled: this.props.IsLock,
-      onChange: this.handleChange,
-      value: this.state.value,
-      style: this.props.IsRed == true ? errorChange : {}
+      disabled: this.props.isDisabled,
+      onChange: this.handleChangeValue,
+      value: this.props.value,
+      style: this.props.isInvalid == true ? errorChange : {}
     });
   }
 
@@ -135,11 +132,11 @@ class LogIn extends React.Component {
     this.state = {
       email: "user@example.com",
       password: "mercdev",
-      IsLock: false,
-      IsRed: false,
+      isDisabled: false,
+      isInvalid: false,
       error: ""
     };
-    this.removeRedColor = this.removeRedColor.bind(this);
+    this.removeInvalid = this.removeInvalid.bind(this);
     this.logIn = this.logIn.bind(this);
     this.handleChangeEmail = this.handleChangeEmail.bind(this);
     this.handleChangePassword = this.handleChangePassword.bind(this);
@@ -148,7 +145,7 @@ class LogIn extends React.Component {
   async logIn(e) {
     e.preventDefault();
     this.setState({
-      IsLock: true,
+      isDisabled: true,
       error: ""
     });
     var login = this.state.email;
@@ -156,7 +153,7 @@ class LogIn extends React.Component {
     var url = "https://us-central1-mercdev-academy.cloudfunctions.net/login";
 
     try {
-      const response = await request(url, {
+      const response = await sendRequest(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -184,7 +181,7 @@ class LogIn extends React.Component {
       if (response.status == 400) {
         this.setState({
           password: "",
-          IsRed: true,
+          isInvalid: true,
           error: "E-Mail or password is incorrect"
         });
       } else {
@@ -195,13 +192,13 @@ class LogIn extends React.Component {
     }
 
     this.setState({
-      IsLock: false
+      isDisabled: false
     });
   }
 
-  removeRedColor() {
+  removeInvalid() {
     this.setState({
-      IsRed: false
+      isInvalid: false
     });
   }
 
@@ -218,29 +215,29 @@ class LogIn extends React.Component {
   }
 
   render() {
-    return React.createElement("div", null, React.createElement(Logo, null), React.createElement("div", {
-      className: "block"
-    }, React.createElement("h1", {
+    console.log(this.state);
+    return React.createElement("div", null, React.createElement(Logo, null), React.createElement(Panel, null, React.createElement("h1", {
       className: "block__headline"
     }, "Log In"), React.createElement("form", {
       onSubmit: this.logIn,
       className: "form"
     }, React.createElement(Input, {
       type: "email",
-      removeRedColor: this.removeRedColor,
+      removeInvalid: this.removeInvalid,
       value: "user@example.com",
-      IsRed: this.state.IsRed,
-      IsLock: this.state.IsLock,
-      handleChange: this.handleChangeEmail
+      isInvalid: this.state.isInvalid,
+      isDisabled: this.state.isDisabled,
+      handleChangeValue: this.handleChangeEmail
     }), React.createElement(Input, {
       type: "password",
       value: this.state.password,
-      IsLock: this.state.IsLock,
-      handleChange: this.handleChangePassword
+      isDisabled: this.state.isDisabled,
+      handleChangeValue: this.handleChangePassword
     }), React.createElement(Error, {
       error: this.state.error
-    }), React.createElement(LoginButton, {
-      lock: this.state.IsLock
+    }), React.createElement(Button, {
+      form: "login",
+      isDisabled: this.state.isDisabled
     }))));
   }
 
@@ -252,9 +249,7 @@ class LogOut extends React.Component {
   }
 
   render() {
-    return React.createElement("div", null, React.createElement(Logo, null), React.createElement("div", {
-      className: "block"
-    }, React.createElement("form", {
+    return React.createElement("div", null, React.createElement(Logo, null), React.createElement(Panel, null, React.createElement("form", {
       action: "login.html",
       method: "GET",
       onSubmit: this.props.clickLogout
@@ -262,7 +257,9 @@ class LogOut extends React.Component {
       user: this.props.user
     }), React.createElement(LogoutHead, {
       user: this.props.user
-    }), React.createElement(LogoutButton, null))));
+    }), React.createElement(Button, {
+      form: "logout"
+    }))));
   }
 
 }

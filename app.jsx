@@ -1,4 +1,4 @@
-async function request(url, options) {
+async function sendRequest(url, options) {
   const response = await fetch(url, options);
   const json = await response.json();
   if (response.ok) {
@@ -8,6 +8,15 @@ async function request(url, options) {
       error: json.error,
       status: response.status
     };
+  }
+}
+
+class Panel extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return <div className="block">{this.props.children}</div>;
   }
 }
 
@@ -27,28 +36,13 @@ function LogoutHead(props) {
   );
 }
 
-class LogoutButton extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <input
-        type="submit"
-        className="form form__button form__button_profile"
-        value="Logout"
-      />
-    );
-  }
-}
-
-class LoginButton extends React.Component {
+class Button extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      IsLock: false
+      form: this.props.form,
+      isDisabled: false
     };
   }
 
@@ -56,11 +50,13 @@ class LoginButton extends React.Component {
     return (
       <input
         type="submit"
-        name="login_button"
-        id="login_button"
-        className="form__button"
-        disabled={this.props.IsLock}
-        value="Login"
+        className={
+          this.props.form == "login"
+            ? "form__button"
+            : "form form__button form__button_profile"
+        }
+        disabled={this.props.isDisabled}
+        value={this.props.form == "login" ? "Login" : "Logout"}
       />
     );
   }
@@ -100,11 +96,11 @@ class Input extends React.Component {
       value: this.props.value
     };
 
-    this.handleChange = this.handleChange.bind(this);
+    this.handleChangeValue = this.handleChangeValue.bind(this);
   }
 
-  handleChange(e) {
-    this.props.handleChange(e);
+  handleChangeValue(e) {
+    this.props.handleChangeValue(e);
     this.setState({
       value: e.target.value
     });
@@ -118,7 +114,7 @@ class Input extends React.Component {
 
     return (
       <input
-        onClick={this.props.removeRedColor}
+        onClick={this.props.removeInvalid}
         type={this.state.type}
         className={
           this.props.type == "password"
@@ -126,10 +122,10 @@ class Input extends React.Component {
             : "form__input"
         }
         placeholder={this.props.type == "password" ? "Password" : "E-Mail"}
-        disabled={this.props.IsLock}
-        onChange={this.handleChange}
-        value={this.state.value}
-        style={this.props.IsRed == true ? errorChange : {}}
+        disabled={this.props.isDisabled}
+        onChange={this.handleChangeValue}
+        value={this.props.value}
+        style={this.props.isInvalid == true ? errorChange : {}}
       />
     );
   }
@@ -142,12 +138,12 @@ class LogIn extends React.Component {
     this.state = {
       email: "user@example.com",
       password: "mercdev",
-      IsLock: false,
-      IsRed: false,
+      isDisabled: false,
+      isInvalid: false,
       error: ""
     };
 
-    this.removeRedColor = this.removeRedColor.bind(this);
+    this.removeInvalid = this.removeInvalid.bind(this);
     this.logIn = this.logIn.bind(this);
     this.handleChangeEmail = this.handleChangeEmail.bind(this);
     this.handleChangePassword = this.handleChangePassword.bind(this);
@@ -157,7 +153,7 @@ class LogIn extends React.Component {
     e.preventDefault();
 
     this.setState({
-      IsLock: true,
+      isDisabled: true,
       error: ""
     });
 
@@ -166,7 +162,7 @@ class LogIn extends React.Component {
     var url = "https://us-central1-mercdev-academy.cloudfunctions.net/login";
 
     try {
-      const response = await request(url, {
+      const response = await sendRequest(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -191,7 +187,7 @@ class LogIn extends React.Component {
       if (response.status == 400) {
         this.setState({
           password: "",
-          IsRed: true,
+          isInvalid: true,
           error: "E-Mail or password is incorrect"
         });
       } else {
@@ -201,13 +197,13 @@ class LogIn extends React.Component {
       }
     }
     this.setState({
-      IsLock: false
+      isDisabled: false
     });
   }
 
-  removeRedColor() {
+  removeInvalid() {
     this.setState({
-      IsRed: false
+      isInvalid: false
     });
   }
 
@@ -224,34 +220,35 @@ class LogIn extends React.Component {
   }
 
   render() {
+    console.log(this.state);
     return (
       <div>
         <Logo />
 
-        <div className="block">
+        <Panel>
           <h1 className="block__headline">Log In</h1>
           <form onSubmit={this.logIn} className="form">
             <Input
               type="email"
-              removeRedColor={this.removeRedColor}
+              removeInvalid={this.removeInvalid}
               value="user@example.com"
-              IsRed={this.state.IsRed}
-              IsLock={this.state.IsLock}
-              handleChange={this.handleChangeEmail}
+              isInvalid={this.state.isInvalid}
+              isDisabled={this.state.isDisabled}
+              handleChangeValue={this.handleChangeEmail}
             />
 
             <Input
               type="password"
               value={this.state.password}
-              IsLock={this.state.IsLock}
-              handleChange={this.handleChangePassword}
+              isDisabled={this.state.isDisabled}
+              handleChangeValue={this.handleChangePassword}
             />
 
             <Error error={this.state.error} />
 
-            <LoginButton lock={this.state.IsLock} />
+            <Button form="login" isDisabled={this.state.isDisabled} />
           </form>
-        </div>
+        </Panel>
       </div>
     );
   }
@@ -267,7 +264,7 @@ class LogOut extends React.Component {
       <div>
         <Logo />
 
-        <div className="block">
+        <Panel>
           <form
             action="login.html"
             method="GET"
@@ -277,9 +274,9 @@ class LogOut extends React.Component {
 
             <LogoutHead user={this.props.user} />
 
-            <LogoutButton />
+            <Button form="logout" />
           </form>
-        </div>
+        </Panel>
       </div>
     );
   }
