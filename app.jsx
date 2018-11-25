@@ -24,18 +24,6 @@ function Logo(props) {
   return <img src="img/w-mercury-development.svg" className="logo" />;
 }
 
-function LogoutImg(props) {
-  return <img src={props.user.photoUrl} className="block__img" id="photo" />;
-}
-
-function LogoutHead(props) {
-  return (
-    <h1 className="block__headline block__headline_name" id="UsName">
-      {props.user.name}
-    </h1>
-  );
-}
-
 class Button extends React.Component {
   constructor(props) {
     super(props);
@@ -58,31 +46,6 @@ class Button extends React.Component {
         disabled={this.props.isDisabled}
         value={this.props.form == "login" ? "Login" : "Logout"}
       />
-    );
-  }
-}
-
-class Error extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <div
-        className="form__error"
-        id="error"
-        name="error"
-        style={
-          !this.props.error == ""
-            ? { display: "inline-block" }
-            : { display: "none" }
-        }
-      >
-        <span id="errortext" name="errortext">
-          {this.props.error}
-        </span>
-      </div>
     );
   }
 }
@@ -244,7 +207,20 @@ class LogIn extends React.Component {
               handleChangeValue={this.handleChangePassword}
             />
 
-            <Error error={this.state.error} />
+            <div
+              className="form__error"
+              id="error"
+              name="error"
+              style={
+                !this.state.error == ""
+                  ? { display: "inline-block" }
+                  : { display: "none" }
+              }
+            >
+              <span id="errortext" name="errortext">
+                {this.state.error}
+              </span>
+            </div>
 
             <Button form="login" isDisabled={this.state.isDisabled} />
           </form>
@@ -270,9 +246,15 @@ class LogOut extends React.Component {
             method="GET"
             onSubmit={this.props.clickLogout}
           >
-            <LogoutImg user={this.props.user} />
+            <img
+              src={this.props.user.photoUrl}
+              className="block__img"
+              id="photo"
+            />
 
-            <LogoutHead user={this.props.user} />
+            <h1 className="block__headline block__headline_name" id="UsName">
+              {this.props.user.name}
+            </h1>
 
             <Button form="logout" />
           </form>

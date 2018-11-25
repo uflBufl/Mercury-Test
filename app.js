@@ -32,21 +32,6 @@ function Logo(props) {
   });
 }
 
-function LogoutImg(props) {
-  return React.createElement("img", {
-    src: props.user.photoUrl,
-    className: "block__img",
-    id: "photo"
-  });
-}
-
-function LogoutHead(props) {
-  return React.createElement("h1", {
-    className: "block__headline block__headline_name",
-    id: "UsName"
-  }, props.user.name);
-}
-
 class Button extends React.Component {
   constructor(props) {
     super(props);
@@ -63,29 +48,6 @@ class Button extends React.Component {
       disabled: this.props.isDisabled,
       value: this.props.form == "login" ? "Login" : "Logout"
     });
-  }
-
-}
-
-class Error extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return React.createElement("div", {
-      className: "form__error",
-      id: "error",
-      name: "error",
-      style: !this.props.error == "" ? {
-        display: "inline-block"
-      } : {
-        display: "none"
-      }
-    }, React.createElement("span", {
-      id: "errortext",
-      name: "errortext"
-    }, this.props.error));
   }
 
 }
@@ -233,9 +195,19 @@ class LogIn extends React.Component {
       value: this.state.password,
       isDisabled: this.state.isDisabled,
       handleChangeValue: this.handleChangePassword
-    }), React.createElement(Error, {
-      error: this.state.error
-    }), React.createElement(Button, {
+    }), React.createElement("div", {
+      className: "form__error",
+      id: "error",
+      name: "error",
+      style: !this.state.error == "" ? {
+        display: "inline-block"
+      } : {
+        display: "none"
+      }
+    }, React.createElement("span", {
+      id: "errortext",
+      name: "errortext"
+    }, this.state.error)), React.createElement(Button, {
       form: "login",
       isDisabled: this.state.isDisabled
     }))));
@@ -253,11 +225,14 @@ class LogOut extends React.Component {
       action: "login.html",
       method: "GET",
       onSubmit: this.props.clickLogout
-    }, React.createElement(LogoutImg, {
-      user: this.props.user
-    }), React.createElement(LogoutHead, {
-      user: this.props.user
-    }), React.createElement(Button, {
+    }, React.createElement("img", {
+      src: this.props.user.photoUrl,
+      className: "block__img",
+      id: "photo"
+    }), React.createElement("h1", {
+      className: "block__headline block__headline_name",
+      id: "UsName"
+    }, this.props.user.name), React.createElement(Button, {
       form: "logout"
     }))));
   }
