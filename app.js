@@ -13,10 +13,6 @@ async function sendRequest(url, options) {
 }
 
 class Panel extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return React.createElement("div", {
       className: "block"
@@ -30,6 +26,15 @@ function Logo(props) {
     src: "img/w-mercury-development.svg",
     className: "logo"
   });
+}
+
+class Button_Profile extends React.Component {
+  render() {
+    return React.createElement("div", null, React.createElement(Button, {
+      className: "form form__button_profile"
+    }));
+  }
+
 }
 
 class Button extends React.Component {
@@ -52,13 +57,24 @@ class Button extends React.Component {
 
 }
 
+class Input_Password extends React.Component {
+  render() {
+    return React.createElement("div", {
+      className: "form__input_password"
+    }, React.createElement(Input, {
+      type: this.props.type,
+      value: this.props.value,
+      isDisabled: this.props.isDisabled,
+      handleChangeValue: this.props.handleChangeValue,
+      placeholder: "Password"
+    }));
+  }
+
+}
+
 class Input extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      type: this.props.type,
-      value: this.props.value
-    };
     this.handleChangeValue = this.handleChangeValue.bind(this);
   }
 
@@ -76,9 +92,9 @@ class Input extends React.Component {
     };
     return React.createElement("input", {
       onClick: this.props.removeInvalid,
-      type: this.state.type,
-      className: this.props.type == "password" ? "form__input form__input_password" : "form__input",
-      placeholder: this.props.type == "password" ? "Password" : "E-Mail",
+      type: this.props.type,
+      className: "form__input",
+      placeholder: this.props.placeholder,
       disabled: this.props.isDisabled,
       onChange: this.handleChangeValue,
       value: this.props.value,
@@ -190,7 +206,7 @@ class LogIn extends React.Component {
       isInvalid: this.state.isInvalid,
       isDisabled: this.state.isDisabled,
       handleChangeValue: this.handleChangeEmail
-    }), React.createElement(Input, {
+    }), React.createElement(Input_Password, {
       type: "password",
       value: this.state.password,
       isDisabled: this.state.isDisabled,

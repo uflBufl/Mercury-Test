@@ -12,9 +12,6 @@ async function sendRequest(url, options) {
 }
 
 class Panel extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     return <div className="block">{this.props.children}</div>;
   }
@@ -22,6 +19,16 @@ class Panel extends React.Component {
 
 function Logo(props) {
   return <img src="img/w-mercury-development.svg" className="logo" />;
+}
+
+class Button_Profile extends React.Component {
+  render() {
+    return (
+      <div>
+        <Button className="form form__button_profile" />
+      </div>
+    );
+  }
 }
 
 class Button extends React.Component {
@@ -50,15 +57,26 @@ class Button extends React.Component {
   }
 }
 
+class Input_Password extends React.Component {
+  render() {
+    return (
+      <div className="form__input_password">
+        <Input
+          type={this.props.type}
+          value={this.props.value}
+          isDisabled={this.props.isDisabled}
+          handleChangeValue={this.props.handleChangeValue}
+          placeholder={"Password"}
+        />
+      </div>
+    );
+  }
+}
+
 class Input extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      type: this.props.type,
-      value: this.props.value
-    };
-
+    
     this.handleChangeValue = this.handleChangeValue.bind(this);
   }
 
@@ -78,13 +96,9 @@ class Input extends React.Component {
     return (
       <input
         onClick={this.props.removeInvalid}
-        type={this.state.type}
-        className={
-          this.props.type == "password"
-            ? "form__input form__input_password"
-            : "form__input"
-        }
-        placeholder={this.props.type == "password" ? "Password" : "E-Mail"}
+        type={this.props.type}
+        className={"form__input"}
+        placeholder={this.props.placeholder}
         disabled={this.props.isDisabled}
         onChange={this.handleChangeValue}
         value={this.props.value}
@@ -200,7 +214,14 @@ class LogIn extends React.Component {
               handleChangeValue={this.handleChangeEmail}
             />
 
-            <Input
+            {/* <Input
+              type="password"
+              value={this.state.password}
+              isDisabled={this.state.isDisabled}
+              handleChangeValue={this.handleChangePassword}
+            /> */}
+
+            <Input_Password
               type="password"
               value={this.state.password}
               isDisabled={this.state.isDisabled}
