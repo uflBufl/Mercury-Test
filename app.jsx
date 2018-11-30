@@ -4,8 +4,14 @@ async function sendRequest(url, options) {
   if (response.ok) {
     return json;
   } else {
+    let errorMessage = json.error;
+    if (response.status == 0) errorMessage = "No internet connection";
+    if (response.status == 503)
+      errorMessage = "Server is temporarily unavailable";
+    if (response.status == 400)
+      errorMessage = "E-Mail or password is incorrect";
     throw {
-      error: json.error,
+      error: errorMessage,
       status: response.status
     };
   }
@@ -21,72 +27,19 @@ function Logo(props) {
   return <img src="img/w-mercury-development.svg" className="logo" />;
 }
 
-class Button_Profile extends React.Component {
-  render() {
-    return (
-      <div>
-        <Button className="form form__button_profile" />
-      </div>
-    );
-  }
-}
-
 class Button extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      form: this.props.form,
-      isDisabled: false
-    };
-  }
-
   render() {
     return (
       <input
         type="submit"
-        className={
-          this.props.form == "login"
-            ? "form__button"
-            : "form form__button form__button_profile"
-        }
-        disabled={this.props.isDisabled}
-        value={this.props.form == "login" ? "Login" : "Logout"}
+        className={"form__button " + this.props.addClass}
+        {...this.props}
       />
     );
   }
 }
 
-class Input_Password extends React.Component {
-  render() {
-    return (
-      <div className="form__input_password">
-        <Input
-          type={this.props.type}
-          value={this.props.value}
-          isDisabled={this.props.isDisabled}
-          handleChangeValue={this.props.handleChangeValue}
-          placeholder={"Password"}
-        />
-      </div>
-    );
-  }
-}
-
 class Input extends React.Component {
-  constructor(props) {
-    super(props);
-    
-    this.handleChangeValue = this.handleChangeValue.bind(this);
-  }
-
-  handleChangeValue(e) {
-    this.props.handleChangeValue(e);
-    this.setState({
-      value: e.target.value
-    });
-  }
-
   render() {
     const errorChange = {
       borderColor: "#ed4159",
@@ -95,14 +48,9 @@ class Input extends React.Component {
 
     return (
       <input
-        onClick={this.props.removeInvalid}
-        type={this.props.type}
-        className={"form__input"}
-        placeholder={this.props.placeholder}
-        disabled={this.props.isDisabled}
-        onChange={this.handleChangeValue}
-        value={this.props.value}
+        className={"form__input " + this.props.addClass}
         style={this.props.isInvalid == true ? errorChange : {}}
+        {...this.props}
       />
     );
   }
@@ -115,7 +63,7 @@ class LogIn extends React.Component {
     this.state = {
       email: "user@example.com",
       password: "mercdev",
-      isDisabled: false,
+      isSending: false,
       isInvalid: false,
       error: ""
     };
@@ -130,7 +78,7 @@ class LogIn extends React.Component {
     e.preventDefault();
 
     this.setState({
-      isDisabled: true,
+      isSending: true,
       error: ""
     });
 
@@ -149,32 +97,21 @@ class LogIn extends React.Component {
 
       const user = response;
 
-      this.props.clickLogin(user);
+      this.props.submitLogin(user);
     } catch (response) {
-      if (response.status == 0) {
-        this.setState({
-          error: "No internet connection"
-        });
-      }
-      if (response.status == 503) {
-        this.setState({
-          error: "Server is temporarily unavailable"
-        });
-      }
       if (response.status == 400) {
         this.setState({
           password: "",
-          isInvalid: true,
-          error: "E-Mail or password is incorrect"
-        });
-      } else {
-        this.setState({
-          error: response.error
+          isInvalid: true
         });
       }
+
+      this.setState({
+        error: response.error
+      });
     }
     this.setState({
-      isDisabled: false
+      isSending: false
     });
   }
 
@@ -197,41 +134,32 @@ class LogIn extends React.Component {
   }
 
   render() {
-    console.log(this.state);
     return (
       <div>
-        <Logo />
-
         <Panel>
           <h1 className="block__headline">Log In</h1>
           <form onSubmit={this.logIn} className="form">
             <Input
               type="email"
-              removeInvalid={this.removeInvalid}
-              value="user@example.com"
+              onClick={this.removeInvalid}
+              value={this.state.email}
               isInvalid={this.state.isInvalid}
-              isDisabled={this.state.isDisabled}
-              handleChangeValue={this.handleChangeEmail}
+              disabled={this.state.isSending}
+              onChange={this.handleChangeEmail}
+              placeholder="E-Mail"
             />
 
-            {/* <Input
+            <Input
               type="password"
               value={this.state.password}
-              isDisabled={this.state.isDisabled}
-              handleChangeValue={this.handleChangePassword}
-            /> */}
-
-            <Input_Password
-              type="password"
-              value={this.state.password}
-              isDisabled={this.state.isDisabled}
-              handleChangeValue={this.handleChangePassword}
+              disabled={this.state.isSending}
+              onChange={this.handleChangePassword}
+              placeholder="Password"
+              addClass="form__input_password"
             />
 
             <div
               className="form__error"
-              id="error"
-              name="error"
               style={
                 !this.state.error == ""
                   ? { display: "inline-block" }
@@ -243,7 +171,7 @@ class LogIn extends React.Component {
               </span>
             </div>
 
-            <Button form="login" isDisabled={this.state.isDisabled} />
+            <Button value="Login" disabled={this.state.isSending} />
           </form>
         </Panel>
       </div>
@@ -251,33 +179,19 @@ class LogIn extends React.Component {
   }
 }
 
-class LogOut extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
+class Profile extends React.Component {
   render() {
     return (
       <div>
-        <Logo />
-
         <Panel>
-          <form
-            action="login.html"
-            method="GET"
-            onSubmit={this.props.clickLogout}
-          >
-            <img
-              src={this.props.user.photoUrl}
-              className="block__img"
-              id="photo"
-            />
+          <form {...this.props}>
+            <img src={this.props.user.photoUrl} className="block__img" />
 
             <h1 className="block__headline block__headline_name" id="UsName">
               {this.props.user.name}
             </h1>
 
-            <Button form="logout" />
+            <Button value="Logout" addClass="form form__button_profile" />
           </form>
         </Panel>
       </div>
@@ -291,31 +205,35 @@ class App extends React.Component {
 
     this.state = {};
 
-    this.clickLogout = this.clickLogout.bind(this);
-    this.clickLogin = this.clickLogin.bind(this);
+    this.submitLogout = this.submitLogout.bind(this);
+    this.submitLogin = this.submitLogin.bind(this);
   }
 
-  clickLogin(user) {
+  submitLogin(user) {
     this.setState({
       user
     });
   }
 
-  clickLogout() {
+  submitLogout() {
     this.setState({
       user: null
     });
   }
 
   render() {
-    if (this.state.user) {
-      return <LogOut clickLogout={this.clickLogout} user={this.state.user} />;
-    }
-    return <LogIn clickLogin={this.clickLogin} />;
+    return (
+      <div>
+        <Logo />
+
+        {this.state.user ? (
+          <Profile onSubmit={this.submitLogout} user={this.state.user} />
+        ) : (
+          <LogIn submitLogin={this.submitLogin} />
+        )}
+      </div>
+    );
   }
 }
 
-ReactDOM.render(
-  React.createElement(App, null),
-  document.querySelector("#root")
-);
+ReactDOM.render(<App />, document.querySelector("#root"));

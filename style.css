@@ -74,7 +74,7 @@
   border-color: rgba(151, 151, 151, 0.25);
 }
 .form__input_password {
-  margin: -16px 0px 0px 0px;
+  margin: 32px 0px 0px 0px;
 }
 .form__error {
   margin: 32px 0px 0px 0px;
@@ -190,7 +190,7 @@ body {
     width: calc(100% - 48px);
   }
   .form__input_password {
-    margin: -8px -24px 0px -24px;
+    margin: 26px 0px 0px 0px;
   }
   .form__error {
     margin: 24px 0px 0px 0px;
@@ -252,7 +252,7 @@ body {
   }
 
   .form__input_password {
-    margin: -8px -24px 0px -24px;
+    margin: 26px 0px 0px 0px;
   }
   .form__error {
     margin: 24px 0px 0px 0px;

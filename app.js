@@ -1,3 +1,5 @@
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
 async function sendRequest(url, options) {
   const response = await fetch(url, options);
   const json = await response.json();
@@ -5,8 +7,12 @@ async function sendRequest(url, options) {
   if (response.ok) {
     return json;
   } else {
+    let errorMessage = json.error;
+    if (response.status == 0) errorMessage = "No internet connection";
+    if (response.status == 503) errorMessage = "Server is temporarily unavailable";
+    if (response.status == 400) errorMessage = "E-Mail or password is incorrect";
     throw {
-      error: json.error,
+      error: errorMessage,
       status: response.status
     };
   }
@@ -28,78 +34,26 @@ function Logo(props) {
   });
 }
 
-class Button_Profile extends React.Component {
-  render() {
-    return React.createElement("div", null, React.createElement(Button, {
-      className: "form form__button_profile"
-    }));
-  }
-
-}
-
 class Button extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      form: this.props.form,
-      isDisabled: false
-    };
-  }
-
   render() {
-    return React.createElement("input", {
+    return React.createElement("input", _extends({
       type: "submit",
-      className: this.props.form == "login" ? "form__button" : "form form__button form__button_profile",
-      disabled: this.props.isDisabled,
-      value: this.props.form == "login" ? "Login" : "Logout"
-    });
-  }
-
-}
-
-class Input_Password extends React.Component {
-  render() {
-    return React.createElement("div", {
-      className: "form__input_password"
-    }, React.createElement(Input, {
-      type: this.props.type,
-      value: this.props.value,
-      isDisabled: this.props.isDisabled,
-      handleChangeValue: this.props.handleChangeValue,
-      placeholder: "Password"
-    }));
+      className: "form__button " + this.props.addClass
+    }, this.props));
   }
 
 }
 
 class Input extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleChangeValue = this.handleChangeValue.bind(this);
-  }
-
-  handleChangeValue(e) {
-    this.props.handleChangeValue(e);
-    this.setState({
-      value: e.target.value
-    });
-  }
-
   render() {
     const errorChange = {
       borderColor: "#ed4159",
       color: "#ed4159"
     };
-    return React.createElement("input", {
-      onClick: this.props.removeInvalid,
-      type: this.props.type,
-      className: "form__input",
-      placeholder: this.props.placeholder,
-      disabled: this.props.isDisabled,
-      onChange: this.handleChangeValue,
-      value: this.props.value,
+    return React.createElement("input", _extends({
+      className: "form__input " + this.props.addClass,
       style: this.props.isInvalid == true ? errorChange : {}
-    });
+    }, this.props));
   }
 
 }
@@ -110,7 +64,7 @@ class LogIn extends React.Component {
     this.state = {
       email: "user@example.com",
       password: "mercdev",
-      isDisabled: false,
+      isSending: false,
       isInvalid: false,
       error: ""
     };
@@ -123,7 +77,7 @@ class LogIn extends React.Component {
   async logIn(e) {
     e.preventDefault();
     this.setState({
-      isDisabled: true,
+      isSending: true,
       error: ""
     });
     var login = this.state.email;
@@ -142,35 +96,22 @@ class LogIn extends React.Component {
         })
       });
       const user = response;
-      this.props.clickLogin(user);
+      this.props.submitLogin(user);
     } catch (response) {
-      if (response.status == 0) {
-        this.setState({
-          error: "No internet connection"
-        });
-      }
-
-      if (response.status == 503) {
-        this.setState({
-          error: "Server is temporarily unavailable"
-        });
-      }
-
       if (response.status == 400) {
         this.setState({
           password: "",
-          isInvalid: true,
-          error: "E-Mail or password is incorrect"
-        });
-      } else {
-        this.setState({
-          error: response.error
+          isInvalid: true
         });
       }
+
+      this.setState({
+        error: response.error
+      });
     }
 
     this.setState({
-      isDisabled: false
+      isSending: false
     });
   }
 
@@ -193,28 +134,28 @@ class LogIn extends React.Component {
   }
 
   render() {
-    console.log(this.state);
-    return React.createElement("div", null, React.createElement(Logo, null), React.createElement(Panel, null, React.createElement("h1", {
+    return React.createElement("div", null, React.createElement(Panel, null, React.createElement("h1", {
       className: "block__headline"
     }, "Log In"), React.createElement("form", {
       onSubmit: this.logIn,
       className: "form"
     }, React.createElement(Input, {
       type: "email",
-      removeInvalid: this.removeInvalid,
-      value: "user@example.com",
+      onClick: this.removeInvalid,
+      value: this.state.email,
       isInvalid: this.state.isInvalid,
-      isDisabled: this.state.isDisabled,
-      handleChangeValue: this.handleChangeEmail
-    }), React.createElement(Input_Password, {
+      disabled: this.state.isSending,
+      onChange: this.handleChangeEmail,
+      placeholder: "E-Mail"
+    }), React.createElement(Input, {
       type: "password",
       value: this.state.password,
-      isDisabled: this.state.isDisabled,
-      handleChangeValue: this.handleChangePassword
+      disabled: this.state.isSending,
+      onChange: this.handleChangePassword,
+      placeholder: "Password",
+      addClass: "form__input_password"
     }), React.createElement("div", {
       className: "form__error",
-      id: "error",
-      name: "error",
       style: !this.state.error == "" ? {
         display: "inline-block"
       } : {
@@ -224,32 +165,24 @@ class LogIn extends React.Component {
       id: "errortext",
       name: "errortext"
     }, this.state.error)), React.createElement(Button, {
-      form: "login",
-      isDisabled: this.state.isDisabled
+      value: "Login",
+      disabled: this.state.isSending
     }))));
   }
 
 }
 
-class LogOut extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
+class Profile extends React.Component {
   render() {
-    return React.createElement("div", null, React.createElement(Logo, null), React.createElement(Panel, null, React.createElement("form", {
-      action: "login.html",
-      method: "GET",
-      onSubmit: this.props.clickLogout
-    }, React.createElement("img", {
+    return React.createElement("div", null, React.createElement(Panel, null, React.createElement("form", this.props, React.createElement("img", {
       src: this.props.user.photoUrl,
-      className: "block__img",
-      id: "photo"
+      className: "block__img"
     }), React.createElement("h1", {
       className: "block__headline block__headline_name",
       id: "UsName"
     }, this.props.user.name), React.createElement(Button, {
-      form: "logout"
+      value: "Logout",
+      addClass: "form form__button_profile"
     }))));
   }
 
@@ -259,33 +192,29 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
-    this.clickLogout = this.clickLogout.bind(this);
-    this.clickLogin = this.clickLogin.bind(this);
+    this.submitLogout = this.submitLogout.bind(this);
+    this.submitLogin = this.submitLogin.bind(this);
   }
 
-  clickLogin(user) {
+  submitLogin(user) {
     this.setState({
       user
     });
   }
 
-  clickLogout() {
+  submitLogout() {
     this.setState({
       user: null
     });
   }
 
   render() {
-    if (this.state.user) {
-      return React.createElement(LogOut, {
-        clickLogout: this.clickLogout,
-        user: this.state.user
-      });
-    }
-
-    return React.createElement(LogIn, {
-      clickLogin: this.clickLogin
-    });
+    return React.createElement("div", null, React.createElement(Logo, null), this.state.user ? React.createElement(Profile, {
+      onSubmit: this.submitLogout,
+      user: this.state.user
+    }) : React.createElement(LogIn, {
+      submitLogin: this.submitLogin
+    }));
   }
 
 }
