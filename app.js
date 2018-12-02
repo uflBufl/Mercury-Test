@@ -1,5 +1,18 @@
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
+function createPostRequest(login, password) {
+  return {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      email: login,
+      password: password
+    })
+  };
+}
+
 async function sendRequest(url, options) {
   const response = await fetch(url, options);
   const json = await response.json();
@@ -85,16 +98,8 @@ class LogIn extends React.Component {
     var url = "https://us-central1-mercdev-academy.cloudfunctions.net/login";
 
     try {
-      const response = await sendRequest(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          email: login,
-          password: password
-        })
-      });
+      const request = createPostRequest(login, password);
+      const response = await sendRequest(url, request);
       const user = response;
       this.props.submitLogin(user);
     } catch (response) {

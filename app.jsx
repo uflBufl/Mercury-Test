@@ -1,3 +1,13 @@
+function createPostRequest(login, password) {
+  return {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ email: login, password: password })
+  };
+}
+
 async function sendRequest(url, options) {
   const response = await fetch(url, options);
   const json = await response.json();
@@ -87,13 +97,8 @@ class LogIn extends React.Component {
     var url = "https://us-central1-mercdev-academy.cloudfunctions.net/login";
 
     try {
-      const response = await sendRequest(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ email: login, password: password })
-      });
+      const request = createPostRequest(login, password);
+      const response = await sendRequest(url, request);
 
       const user = response;
 
