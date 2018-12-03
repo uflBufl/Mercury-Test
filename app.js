@@ -1,19 +1,35 @@
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
-function createPostRequest(login, password) {
-  return {
+async function login(login, password) {
+  var url = "https://us-central1-mercdev-academy.cloudfunctions.net/login";
+  const params = JSON.stringify({
+    email: login,
+    password: password
+  });
+  const response = await post(url, params);
+  return response;
+}
+
+async function post(url, params) {
+  const options = {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({
-      email: login,
-      password: password
-    })
+    body: params
   };
+  const response = await request(url, options);
+  return response;
 }
 
-async function sendRequest(url, options) {
+async function request(url, options) {
+  // const options = {
+  //   method: "POST",
+  //   headers: {
+  //     "Content-Type": "application/json"
+  //   },
+  //   body: params
+  // };
   const response = await fetch(url, options);
   const json = await response.json();
 
@@ -82,24 +98,24 @@ class LogIn extends React.Component {
       error: ""
     };
     this.removeInvalid = this.removeInvalid.bind(this);
-    this.logIn = this.logIn.bind(this);
+    this.submitForm = this.submitForm.bind(this);
     this.handleChangeEmail = this.handleChangeEmail.bind(this);
     this.handleChangePassword = this.handleChangePassword.bind(this);
   }
 
-  async logIn(e) {
+  async submitForm(e) {
     e.preventDefault();
     this.setState({
       isSending: true,
       error: ""
-    });
-    var login = this.state.email;
-    var password = this.state.password;
-    var url = "https://us-central1-mercdev-academy.cloudfunctions.net/login";
+    }); // var login = this.state.email;
+    // var password = this.state.password;
+    // var url = "https://us-central1-mercdev-academy.cloudfunctions.net/login";
 
     try {
-      const request = createPostRequest(login, password);
-      const response = await sendRequest(url, request);
+      // const request = createPostRequest(login, password);
+      // const response = await sendRequest(url, request);
+      const response = await login(this.state.email, this.state.password);
       const user = response;
       this.props.submitLogin(user);
     } catch (response) {
@@ -142,7 +158,7 @@ class LogIn extends React.Component {
     return React.createElement("div", null, React.createElement(Panel, null, React.createElement("h1", {
       className: "block__headline"
     }, "Log In"), React.createElement("form", {
-      onSubmit: this.logIn,
+      onSubmit: this.submitForm,
       className: "form"
     }, React.createElement(Input, {
       type: "email",
