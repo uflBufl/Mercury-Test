@@ -1,10 +1,9 @@
 export default async function login(login, password) {
   var url = "https://us-central1-mercdev-academy.cloudfunctions.net/login";
-  const params = JSON.stringify({
-    email: login,
-    password: password
-  });
+  const params = JSON.stringify({ email: login, password: password });
+
   const response = await post(url, params);
+
   return response;
 }
 
@@ -30,7 +29,6 @@ async function request(url, options) {
   // };
   const response = await fetch(url, options);
   const json = await response.json();
-
   if (response.ok) {
     return json;
   } else {
