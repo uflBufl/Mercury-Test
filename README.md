@@ -15,8 +15,10 @@ npm install
 <h2>Run</h2>
 <li>1. Open project's folder in terminal</li>
 <li>2. Run babel to transform JSX to JS:</li>
-npx babel app.jsx --plugins @babel/plugin-transform-react-jsx --out-file app.js --watch
-<li>3. Open login.html in your browser</li>
+npm start
+<li>3. Open local server</li>
+serve
+<li>4. Open login.html using your local link</li>
 
 <br>
 
