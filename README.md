@@ -24,6 +24,6 @@ npm start
 
 
 The screen from the phone:
-![Скриншот с телефона](image.png)
+![Скриншот с телефона](src/assets/img/image.png)
 
 The launch on the mobile device was made using the xampp server on the local network.
