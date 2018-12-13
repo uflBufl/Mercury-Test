@@ -14,11 +14,8 @@ cd ./Mercury-Test
 npm install
 <h2>Run</h2>
 <li>1. Open project's folder in terminal</li>
-<li>2. Run babel to transform JSX to JS:</li>
+<li>2. Run program:</li>
 npm start
-<li>3. Open local server</li>
-serve
-<li>4. Open login.html using your local link</li>
 
 <br>
 
