@@ -1,0 +1,50 @@
+.form__input {
+  box-sizing: border-box;
+  margin: 48px 0px 0px 0px;
+  border: 1px solid #f1f1f1;
+  width: 504px;
+  height: 48px;
+  border-radius: 4px;
+  background-color: #f1f1f1;
+  outline: 0;
+  padding: 14px 16px;
+  opacity: 0.8;
+  font-size: 16px;
+  color: #262626;
+}
+.form__input:focus {
+  border-color: rgba(151, 151, 151, 0.25);
+}
+.form__input_password {
+  margin: 32px 0px 0px 0px;
+}
+
+.errorChange {
+  border-color: #ed4159;
+  color: #ed4159;
+}
+.errorChange:focus {
+  border-color: rgba(151, 151, 151, 0.25);
+  color: #262626;
+}
+
+@media screen and (max-width: 640px) {
+  .form__input {
+    margin: 32px 24px 0px 24px;
+    width: calc(100% - 48px);
+  }
+  .form__input_password {
+    margin: 26px 0px 0px 0px;
+  }
+}
+
+@media screen and (max-height: 640px) and (max-width: 1136px) and (orientation: landscape) {
+  .form__input {
+    margin: 32px 24px 0px 24px;
+    width: calc(100% - 48px);
+  }
+
+  .form__input_password {
+    margin: 26px 0px 0px 0px;
+  }
+}

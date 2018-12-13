@@ -1,7 +1,9 @@
-import login from "./loginModule.js";
-import Panel from "./Panel.js";
-import Button from "./Button.js";
-import Input from "./Input.js";
+import login from "../services/loginModule.js";
+import Panel from "../components/Panel.js";
+import Button from "../components/Button.js";
+import Input from "../components/Input.js";
+import loginStyle from "./login.css";
+import inputPasswordStyle from "../components/input.css";
 // import { LoginContext } from "./login-context.js";
 
 export default class LogIn extends React.Component {
@@ -89,7 +91,7 @@ export default class LogIn extends React.Component {
               handleChangePassword
             }}
           > */}
-          <h1 className="block__headline">Log In</h1>
+          <h1 className={loginStyle.block__headline}>Log In</h1>
           <form onSubmit={this.submitForm} className="form">
             <Input
               type="email"
@@ -107,11 +109,11 @@ export default class LogIn extends React.Component {
               disabled={this.state.isSending}
               onChange={this.handleChangePassword}
               placeholder="Password"
-              addClass="form__input_password"
+              addClass={inputPasswordStyle.form__input_password}
             />
 
             <div
-              className="form__error"
+              className={loginStyle.form__error}
               style={
                 !this.state.error == ""
                   ? { display: "inline-block" }

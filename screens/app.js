@@ -1,8 +1,15 @@
-import Logo from "./Logo.js";
+import Logo from "../components/Logo.js";
 import Profile from "./Profile.js";
 import LogIn from "./LogIn.js";
-import { UserContext } from "./user-context.js";
+import { UserContext } from "../store/user-context.js";
+import "../style.css";
 // import { LoginContext } from "./login-context.js";
+
+// const BrowserRouter = require('react-router-dom').BrowserRouter
+// const Route = require('react-router-dom').Route
+// const Link = require('react-router-dom').Link
+
+
 
 class App extends React.Component {
   constructor(props) {

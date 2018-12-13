@@ -1,3 +1,5 @@
+import input from "./input.css";
+
 export default class Input extends React.Component {
   render() {
     const errorChange = {
@@ -7,7 +9,7 @@ export default class Input extends React.Component {
 
     return (
       <input
-        className={"form__input " + this.props.addClass}
+        className={`${input.form__input} ${this.props.addClass}`}
         style={this.props.isInvalid == true ? errorChange : {}}
         {...this.props}
       />

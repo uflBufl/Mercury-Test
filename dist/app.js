@@ -3,7 +3,7 @@ import Profile from "./Profile.js";
 import LogIn from "./LogIn.js";
 import { UserContext } from "./user-context.js"; // import { LoginContext } from "./login-context.js";
 
-class App extends React.Component {
+export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -60,4 +60,4 @@ class App extends React.Component {
 
 }
 
-ReactDOM.render(React.createElement(App, null), document.querySelector("#root"));
+// ReactDOM.render(React.createElement(App, null), document.querySelector("#root"));
