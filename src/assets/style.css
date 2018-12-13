@@ -1,6 +1,6 @@
 @font-face {
   font-family: Gotham;
-  src: url("./assets/font/GothamPro-Bold.ttf");
+  src: url("./font/GothamPro-Bold.ttf");
 }
 
 #placeholder {
@@ -19,12 +19,12 @@ body {
   font-family: "Gotham";
 
   /* задаем фоновое изображение, если браузер не поддерживает image-set */
-  background-image: url("assets/img/background.jpg");
+  background-image: url("img/background.jpg");
   /* задаем фоновые изображения, для различных разрешений */
   background-image: -webkit-image-set(
-    url("assets/img/background.jpg") 1x,
-    url("assets/img/background@2x.jpg") 2x,
-    url("assets/img/background@3x.jpg") 3x
+    url("img/background.jpg") 1x,
+    url("img/background@2x.jpg") 2x,
+    url("img/background@3x.jpg") 3x
   );
 
   margin: 0;
@@ -32,12 +32,12 @@ body {
 
 @media screen and (max-width: 640px) {
   body {
-    background-image: url("assets/img/rectangle-2@2x.png");
+    background-image: url("img/rectangle-2@2x.png");
   }
 }
 
 @media screen and (max-width: 320px) {
   body {
-    background-image: url("assets/img/rectangle-2.png");
+    background-image: url("img/rectangle-2.png");
   }
 }

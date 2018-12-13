@@ -1,8 +1,9 @@
-import Button from "../components/Button.js";
-import Panel from "../components/Panel.js";
-import { UserContext } from "../store/user-context.js";
-import profile from "./profile.css";
-import buttonProfileStyle from "../components/button.css";
+import React from "react";
+import Button from "../../components/Button/Button.js";
+import Panel from "../../components/Panel/Panel.js";
+import { UserContext } from "../../store/user-context.js";
+import profile from "./Profile.css";
+import buttonProfileStyle from "../../components/Button/Button.css";
 
 export default class Profile extends React.Component {
   render() {

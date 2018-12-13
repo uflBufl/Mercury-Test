@@ -1,4 +1,5 @@
-import input from "./input.css";
+import React from "react";
+import input from "./Input.css";
 
 export default class Input extends React.Component {
   render() {

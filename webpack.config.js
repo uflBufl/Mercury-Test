@@ -2,7 +2,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  entry: {app: path.resolve("./screens/app.js")},
+  entry: {app: path.resolve("./src/app.js")},
   output: {
     path: path.join(__dirname, "/dist"),
     filename: "bundle.js"
@@ -18,11 +18,7 @@ module.exports = {
             query: {
               "presets": [
                 [
-                  "@babel/preset-react",
-                  {
-                    "pragma": "React.createElement",
-                    "throwIfNamespace": false
-                  }
+                  "@babel/preset-react"
                 ]
               ]								
             }
@@ -55,7 +51,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./index.html"
+      template: "./src/assets/index.html"
     })
   ]
 };

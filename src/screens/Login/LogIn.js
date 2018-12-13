@@ -1,9 +1,10 @@
-import login from "../services/loginModule.js";
-import Panel from "../components/Panel.js";
-import Button from "../components/Button.js";
-import Input from "../components/Input.js";
-import loginStyle from "./login.css";
-import inputPasswordStyle from "../components/input.css";
+import React from "react";
+import login from "../../services/loginModule.js";
+import Panel from "../../components/Panel/Panel.js";
+import Button from "../../components/Button/Button.js";
+import Input from "../../components/Input/Input.js";
+import loginStyle from "./Login.css";
+import inputPasswordStyle from "../../components/Input/Input.css";
 // import { LoginContext } from "./login-context.js";
 
 export default class LogIn extends React.Component {

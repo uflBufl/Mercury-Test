@@ -1,4 +1,5 @@
-import button from "./button.css";
+import React from "react";
+import button from "./Button.css";
 
 export default class Button extends React.Component {
   render() {
