@@ -84,14 +84,7 @@ export default class LogIn extends React.Component {
     return (
       <div>
         <Panel>
-          {/* <LoginContext.Provider
-            value={{
-              email: this.state.email,
-              password: this.state.password,
-              handleChangeEmail,
-              handleChangePassword
-            }}
-          > */}
+          {console.log("login render")}
           <h1 className={loginStyle.block__headline}>Log In</h1>
           <form onSubmit={this.submitForm} className="form">
             <Input
@@ -128,7 +121,6 @@ export default class LogIn extends React.Component {
 
             <Button value="Login" disabled={this.state.isSending} />
           </form>
-          {/* </LoginContext.Provider> */}
         </Panel>
       </div>
     );

@@ -6,13 +6,9 @@ import Profile from "./screens/Profile/Profile.js";
 import LogIn from "./screens/Login/LogIn.js";
 import { UserContext } from "./store/user-context.js";
 import "./assets/style.css";
-// import { LoginContext } from "./login-context.js";
 
-// const BrowserRouter = require('react-router-dom').BrowserRouter
-// const Route = require('react-router-dom').Route
-// const Link = require('react-router-dom').Link
-
-import { BrowserRouter, Route, Link } from "react-router-dom";
+import { Route, Link, Redirect, Switch } from "react-router-dom";
+import BrowserRouter from "react-router-dom/es/BrowserRouter";
 
 class App extends React.Component {
   constructor(props) {
@@ -22,9 +18,6 @@ class App extends React.Component {
 
     this.submitLogout = this.submitLogout.bind(this);
     this.submitLogin = this.submitLogin.bind(this);
-
-    // this.handleChangeEmail = this.handleChangeEmail.bind(this);
-    // this.handleChangePassword = this.handleChangePassword.bind(this);
   }
 
   submitLogin(user) {
@@ -39,55 +32,34 @@ class App extends React.Component {
     });
   }
 
-  // handleChangeEmail(e) {
-  //   this.setState({
-  //     email: e.target.value
-  //   });
-  // }
-
-  // handleChangePassword(e) {
-  //   this.setState({
-  //     password: e.target.value
-  //   });
-  // }
-
-  /*
-  передача данных о пльзователе мне кажется
-  единственным нормальным вариантом использования контекста в этом коде
-  я так понял, что для изменения значений, надо менять стейт функций(также как и с props)
-  но в контексте её не получается передавать, т.к. она сразу же используется в следующем компоненте
-  и я так понял, что здесь стоит оставить её в props.
-
-  я пытался также сделать передачу email и password в Login, но они также сразу используются в следующих компонентах
-  и я их также оставил в props.
-  хотя можно было бы реализовать получение их контекста в инпуте, 
-  но тогда он теряет свою общность компонента.
-
-  не исключаю, что я что то неправильно понял или не заметил
-  */
   render() {
     return (
       <div>
         <Logo />
-        {/* <LoginContext.Provider
-          value={{
-            email: this.state.email,
-            password: this.state.password,
-            changeEmail: this.handleChangeEmail,
-            changePassword: this.handleChangePassword
-          }}
-        > */}
+
+        {this.state.user ? <Redirect to="/profile" /> : <Redirect to="/login" />}
+
         <UserContext.Provider value={this.state.user}>
-          {this.state.user ? (
-            <Profile onSubmit={this.submitLogout} user={this.state.user} />
-          ) : (
-            <LogIn submitLogin={this.submitLogin} />
-          )}
+          {this.state.user
+            ? console.log("Redirect to profile")
+            : console.log("Redirect to 123")}
+            <Route
+              path="/login"
+              component={() => <LogIn submitLogin={this.submitLogin} />}
+            />
+            <Route
+              path="/profile"
+              component={() => <Profile onSubmit={this.submitLogout} />}
+            />
         </UserContext.Provider>
-        {/* </LoginContext.Provider> */}
       </div>
     );
   }
 }
 
-ReactDOM.render(<App />, document.querySelector("#root"));
+ReactDOM.render(
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>,
+  document.querySelector("#root")
+);
