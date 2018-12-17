@@ -15,7 +15,6 @@ class App extends React.Component {
     super(props);
 
     this.submitLogin = user => {
-      console.log(1);
       this.setState({
         user
       });

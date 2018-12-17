@@ -82,7 +82,6 @@ export default class LogIn extends React.Component {
     return (
       <div>
         <Panel>
-          {console.log("login render")}
           <h1 className={loginStyle.block__headline}>Log In</h1>
 
           <form onSubmit={this.submitForm} className="form">
