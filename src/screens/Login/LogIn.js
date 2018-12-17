@@ -1,11 +1,11 @@
 import React from "react";
-import login from "../../services/loginModule.js";
+import { post } from "../../services/http.js";
 import Panel from "../../components/Panel/Panel.js";
 import Button from "../../components/Button/Button.js";
 import Input from "../../components/Input/Input.js";
 import loginStyle from "./Login.css";
 import inputPasswordStyle from "../../components/Input/Input.css";
-// import { LoginContext } from "./login-context.js";
+import { UserContext } from "../../store/user-context.js";
 
 export default class LogIn extends React.Component {
   constructor(props) {
@@ -33,14 +33,12 @@ export default class LogIn extends React.Component {
       error: ""
     });
 
-    // var login = this.state.email;
-    // var password = this.state.password;
-    // var url = "https://us-central1-mercdev-academy.cloudfunctions.net/login";
-
     try {
-      // const request = createPostRequest(login, password);
-      // const response = await sendRequest(url, request);
-      const response = await login(this.state.email, this.state.password);
+      const response = await post(
+        this.state.email,
+        this.state.password,
+        "POST"
+      );
 
       const user = response;
 
@@ -86,6 +84,7 @@ export default class LogIn extends React.Component {
         <Panel>
           {console.log("login render")}
           <h1 className={loginStyle.block__headline}>Log In</h1>
+
           <form onSubmit={this.submitForm} className="form">
             <Input
               type="email"
@@ -103,7 +102,7 @@ export default class LogIn extends React.Component {
               disabled={this.state.isSending}
               onChange={this.handleChangePassword}
               placeholder="Password"
-              addClass={inputPasswordStyle.form__input_password}
+              className={inputPasswordStyle.form__input_password}
             />
 
             <div
@@ -114,9 +113,7 @@ export default class LogIn extends React.Component {
                   : { display: "none" }
               }
             >
-              <span id="errortext" name="errortext">
-                {this.state.error}
-              </span>
+              <span>{this.state.error}</span>
             </div>
 
             <Button value="Login" disabled={this.state.isSending} />

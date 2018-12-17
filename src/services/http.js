@@ -1,13 +1,14 @@
-export default async function login(login, password) {
+async function post(login, password, type) {
   var url = "https://us-central1-mercdev-academy.cloudfunctions.net/login";
   const params = JSON.stringify({ email: login, password: password });
-
-  const response = await post(url, params);
+  // здесь, в итоге надо сделать проверку на тип запроса, но поскольку у нас сейчас только post, то проверку
+  // я не делаю, и от type ничего не зависит. Сейчас всегда выполняется только setPost!!
+  const response = await setPost(url, params);
 
   return response;
 }
 
-async function post(url, params) {
+async function setPost(url, params) {
   const options = {
     method: "POST",
     headers: {
@@ -44,3 +45,5 @@ async function request(url, options) {
     };
   }
 }
+
+export { post };

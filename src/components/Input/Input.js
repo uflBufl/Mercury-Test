@@ -8,11 +8,13 @@ export default class Input extends React.Component {
       color: "#ed4159"
     };
 
+    const { className, ...otherProps } = this.props;
+
     return (
       <input
-        className={`${input.form__input} ${this.props.addClass}`}
+        className={`${input.form__input} ${className}`}
         style={this.props.isInvalid == true ? errorChange : {}}
-        {...this.props}
+        {...otherProps}
       />
     );
   }

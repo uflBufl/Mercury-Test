@@ -14,52 +14,65 @@ class App extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.submitLogin = user => {
+      console.log(1);
+      this.setState({
+        user
+      });
+    };
+
+    this.submitLogout = () => {
+      this.setState({
+        user: null
+      });
+    };
+
+    this.state = {
+      submitLogin: this.submitLogin,
+      submitLogout: this.submitLogout
+    };
 
     this.submitLogout = this.submitLogout.bind(this);
     this.submitLogin = this.submitLogin.bind(this);
-  }
-
-  submitLogin(user) {
-    this.setState({
-      user
-    });
-  }
-
-  submitLogout() {
-    this.setState({
-      user: null
-    });
   }
 
   render() {
     return (
       <div>
         <Logo />
-
-        {this.state.user ? <Redirect to="/profile" /> : <Redirect to="/login" />}
-
-        <UserContext.Provider value={this.state.user}>
-          {this.state.user
-            ? console.log("Redirect to profile")
-            : console.log("Redirect to 123")}
-            <Route
-              path="/login"
-              component={() => <LogIn submitLogin={this.submitLogin} />}
-            />
-            <Route
-              path="/profile"
-              component={() => <Profile onSubmit={this.submitLogout} />}
-            />
+        <UserContext.Provider value={this.state}>
+          <BrowserRouter>
+            <div>
+              {!this.state.user && (
+                <Switch>
+                  <Route path="/login" component={withUserContext(LogIn)} />
+                  <Redirect to="/login" />
+                </Switch>
+              )}
+              {this.state.user && (
+                <Switch>
+                  <Route path="/profile" component={withUserContext(Profile)} />
+                  <Redirect to="/profile" />
+                </Switch>
+              )}
+            </div>
+          </BrowserRouter>
         </UserContext.Provider>
       </div>
     );
   }
 }
 
-ReactDOM.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>,
-  document.querySelector("#root")
-);
+function withUserContext(Component) {
+  return class ComponentWithUserContext extends React.Component {
+    render() {
+      return (
+        <UserContext.Consumer>
+          {context => <Component {...this.props} {...context} />}
+        </UserContext.Consumer>
+      );
+    }
+  };
+}
+
+ReactDOM.render(<App />, document.querySelector("#root"));
