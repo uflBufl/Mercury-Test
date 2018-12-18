@@ -26,7 +26,7 @@ export default class Profile extends React.Component {
               </h1>
 
               <Button
-                user="Logout"
+                value="Logout"
                 className={`${profile.form} ${
                   buttonProfileStyle.form__button_profile
                 }`}

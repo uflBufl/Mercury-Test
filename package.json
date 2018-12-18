@@ -34,6 +34,7 @@
   "dependencies": {
     "@babel/runtime": "^7.2.0",
     "babel-preset-es2017": "^6.24.1",
+    "classnames": "^2.2.6",
     "create-react-app": "^2.1.1",
     "history": "^4.7.2",
     "react": "^16.6.3",

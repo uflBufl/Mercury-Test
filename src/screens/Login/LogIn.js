@@ -19,7 +19,7 @@ export default class LogIn extends React.Component {
       error: ""
     };
 
-    this.removeInvalid = this.removeInvalid.bind(this);
+    this.removeHighlightRed = this.removeHighlightRed.bind(this);
     this.submitForm = this.submitForm.bind(this);
     this.handleChangeEmail = this.handleChangeEmail.bind(this);
     this.handleChangePassword = this.handleChangePassword.bind(this);
@@ -60,7 +60,7 @@ export default class LogIn extends React.Component {
     });
   }
 
-  removeInvalid() {
+  removeHighlightRed() {
     this.setState({
       isInvalid: false
     });
@@ -87,7 +87,7 @@ export default class LogIn extends React.Component {
           <form onSubmit={this.submitForm} className="form">
             <Input
               type="email"
-              onClick={this.removeInvalid}
+              onFocus={this.removeHighlightRed}
               value={this.state.email}
               isInvalid={this.state.isInvalid}
               disabled={this.state.isSending}
