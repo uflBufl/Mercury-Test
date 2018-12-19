@@ -15,9 +15,6 @@
 .form__input:focus {
   border-color: rgba(151, 151, 151, 0.25);
 }
-.form__input_password {
-  margin: 32px 0px 0px 0px;
-}
 
 .errorChange {
   border-color: #ed4159;
@@ -33,18 +30,11 @@
     margin: 32px 24px 0px 24px;
     width: calc(100% - 48px);
   }
-  .form__input_password {
-    margin: 26px 0px 0px 0px;
-  }
 }
 
 @media screen and (max-height: 640px) and (max-width: 1136px) and (orientation: landscape) {
   .form__input {
     margin: 32px 24px 0px 24px;
     width: calc(100% - 48px);
-  }
-
-  .form__input_password {
-    margin: 26px 0px 0px 0px;
   }
 }

@@ -2,8 +2,8 @@ import ReactDOM from "react-dom";
 import React from "react";
 
 import Logo from "./components/Logo/Logo.js";
-import Profile from "./screens/Profile/Profile.js";
-import LogIn from "./screens/Login/LogIn.js";
+import { profileWithUserContext, Profile } from "./screens/Profile/Profile.js";
+import { logInWithUserContext, LogIn } from "./screens/Login/LogIn.js";
 import { UserContext } from "./store/user-context.js";
 import "./assets/style.css";
 
@@ -14,25 +14,43 @@ class App extends React.Component {
   constructor(props) {
     super(props);
 
-    this.submitLogin = user => {
-      this.setState({
-        user
-      });
-    };
+    // this.submitLogin = user => {
+    //   this.setState({
+    //     user
+    //   });
+    // };
 
-    this.submitLogout = () => {
-      this.setState({
-        user: null
-      });
-    };
+    // this.submitLogout = () => {
+    //   this.setState({
+    //     user: null
+    //   });
+    // };
+
+    // this.state = {
+    //   submitLogin: this.submitLogin,
+    //   submitLogout: this.submitLogout
+    // };
+
+    this.submitLogout = this.submitLogout.bind(this);
+    this.submitLogin = this.submitLogin.bind(this);
 
     this.state = {
       submitLogin: this.submitLogin,
       submitLogout: this.submitLogout
     };
 
-    this.submitLogout = this.submitLogout.bind(this);
-    this.submitLogin = this.submitLogin.bind(this);
+  }
+
+  submitLogin(user) {
+    this.setState({
+      user
+    });
+  }
+
+  submitLogout() {
+    this.setState({
+      user: null
+    });
   }
 
   render() {
@@ -44,13 +62,13 @@ class App extends React.Component {
             <div>
               {!this.state.user && (
                 <Switch>
-                  <Route path="/login" component={withUserContext(LogIn)} />
+                  <Route path="/login" component={logInWithUserContext(LogIn)} />
                   <Redirect to="/login" />
                 </Switch>
               )}
               {this.state.user && (
                 <Switch>
-                  <Route path="/profile" component={withUserContext(Profile)} />
+                  <Route path="/profile" component={profileWithUserContext(Profile)} />
                   <Redirect to="/profile" />
                 </Switch>
               )}
@@ -62,16 +80,16 @@ class App extends React.Component {
   }
 }
 
-function withUserContext(Component) {
-  return class ComponentWithUserContext extends React.Component {
-    render() {
-      return (
-        <UserContext.Consumer>
-          {context => <Component {...this.props} {...context} />}
-        </UserContext.Consumer>
-      );
-    }
-  };
-}
+// function withUserContext(Component) {
+//   return class ComponentWithUserContext extends React.Component {
+//     render() {
+//       return (
+//         <UserContext.Consumer>
+//           {context => <Component {...this.props} {...context} />}
+//         </UserContext.Consumer>
+//       );
+//     }
+//   };
+// }
 
 ReactDOM.render(<App />, document.querySelector("#root"));

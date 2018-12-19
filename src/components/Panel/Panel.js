@@ -1,8 +1,8 @@
 import React from "react";
-import panel from "./Panel.css";
+import styles from "./Panel.css";
 
 export default class Panel extends React.Component {
   render() {
-    return <div className = {panel.block}>{this.props.children}</div>;
+    return <div className = {styles.block}>{this.props.children}</div>;
   }
 }

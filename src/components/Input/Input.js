@@ -1,44 +1,17 @@
-var classNames = require("classnames");
+import classNames from "classnames";
 import React from "react";
-import input from "./Input.css";
-
-// var cx = classNames.bind(input);
+import styles from "./Input.css";
 
 export default class Input extends React.Component {
   render() {
     const { className, ...otherProps } = this.props;
 
-    // const f = "input.errorChange";
-    // const c = this.props.isInvalid;
-    // const g = "className";
-    // var inputClass =  input.form__input;
-    // if (className) inputClass += {className};
-    // if (this.props.isInvalid) inputClass += input.errorChange;
-
-    var inputClass = classNames(input.form__input, `${className}`);
-    if (this.props.isInvalid)
-      inputClass = classNames(
-        input.form__input,
-        `${className}`,
-        input.errorChange
-      );
-
-    // var cx = classNames.bind(input);
-
-    // let className = cx({
-    //   base: true,
-    //   inProgress: this.props.store.submissionInProgress,
-    //   error: this.props.store.errorOccurred,
-    //   disabled: this.props.form.valid,
-    // });
-
-    // var inputClass = classNames(input.form__input);
+    const inputClass = classNames(styles.form__input, className, {
+      [styles.errorChange]: this.props.isInvalid
+    });
 
     return (
       <input
-
-        // className={`${input.form__input} ${className}`}
-
         className={inputClass}
         {...otherProps}
       />

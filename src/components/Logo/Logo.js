@@ -1,6 +1,6 @@
 import React from "react";
-import logo from "./Logo.css";
+import styles from "./Logo.css";
 
 export default function Logo(props) {
-  return <img src="src/assets/img/w-mercury-development.svg" className={logo.logo} />;
+  return <img src="src/assets/img/w-mercury-development.svg" className={styles.logo} />;
 }

@@ -22,25 +22,15 @@
   background-color: #ffffff;
   color: #ed4159;
 }
-.form__button_profile {
-  width: 154px;
-  margin: 56px 0px 0px 0px;
-}
 
 @media screen and (max-width: 640px) {
   .form__button {
     margin: 40px 0px 0px 0px;
-  }
-  .form__button_profile {
-    width: 154px;
   }
 }
 
 @media screen and (max-height: 640px) and (max-width: 1136px) and (orientation: landscape) {
   .form__button {
     margin: 40px 0px 0px 0px;
-  }
-  .form__button_profile {
-    width: 154px;
   }
 }

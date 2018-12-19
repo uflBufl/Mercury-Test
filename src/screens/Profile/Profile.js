@@ -2,23 +2,21 @@ import React from "react";
 import Button from "../../components/Button/Button.js";
 import Panel from "../../components/Panel/Panel.js";
 import { UserContext } from "../../store/user-context.js";
-import profile from "./Profile.css";
-import buttonProfileStyle from "../../components/Button/Button.css";
+import styles from "./Profile.css";
 
-export default class Profile extends React.Component {
+ class Profile extends React.Component {
   render() {
     return (
       <div>
         <Panel>
-          {this.props.user && (
             <form {...this.props} onSubmit={this.props.submitLogout}>
               <img
                 src={this.props.user.photoUrl}
-                className={profile.block__img}
+                className={styles.block__img}
               />
               <h1
-                className={`${profile.block__headline} ${
-                  profile.block__headline_name
+                className={`${styles.block__headline} ${
+                  styles.block__headline_name
                 }`}
                 id="UsName"
               >
@@ -27,14 +25,27 @@ export default class Profile extends React.Component {
 
               <Button
                 value="Logout"
-                className={`${profile.form} ${
-                  buttonProfileStyle.form__button_profile
+                className={`${styles.form} ${
+                  styles.form__button_profile
                 }`}
               />
             </form>
-          )}
         </Panel>
       </div>
     );
   }
 }
+
+function profileWithUserContext(Component) {
+  return class WithUserContext extends React.Component {
+    render() {
+      return (
+        <UserContext.Consumer>
+          {context => <Component {...this.props} {...context} />}
+        </UserContext.Consumer>
+      );
+    }
+  };
+}
+
+export { profileWithUserContext, Profile };

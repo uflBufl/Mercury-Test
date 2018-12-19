@@ -1,13 +1,12 @@
 import React from "react";
-import { post } from "../../services/http.js";
+import * as http from "../../services/http.js";
 import Panel from "../../components/Panel/Panel.js";
 import Button from "../../components/Button/Button.js";
 import Input from "../../components/Input/Input.js";
-import loginStyle from "./Login.css";
-import inputPasswordStyle from "../../components/Input/Input.css";
+import styles from "./Login.css";
 import { UserContext } from "../../store/user-context.js";
 
-export default class LogIn extends React.Component {
+class LogIn extends React.Component {
   constructor(props) {
     super(props);
 
@@ -34,10 +33,9 @@ export default class LogIn extends React.Component {
     });
 
     try {
-      const response = await post(
+      const response = await http.post(
         this.state.email,
-        this.state.password,
-        "POST"
+        this.state.password
       );
 
       const user = response;
@@ -82,7 +80,7 @@ export default class LogIn extends React.Component {
     return (
       <div>
         <Panel>
-          <h1 className={loginStyle.block__headline}>Log In</h1>
+          <h1 className={styles.block__headline}>Log In</h1>
 
           <form onSubmit={this.submitForm} className="form">
             <Input
@@ -101,11 +99,11 @@ export default class LogIn extends React.Component {
               disabled={this.state.isSending}
               onChange={this.handleChangePassword}
               placeholder="Password"
-              className={inputPasswordStyle.form__input_password}
+              className={styles.form__input_password}
             />
 
             <div
-              className={loginStyle.form__error}
+              className={styles.form__error}
               style={
                 !this.state.error == ""
                   ? { display: "inline-block" }
@@ -122,3 +120,17 @@ export default class LogIn extends React.Component {
     );
   }
 }
+
+function logInWithUserContext(Component) {
+  return class WithUserContext extends React.Component {
+    render() {
+      return (
+        <UserContext.Consumer>
+          {context => <Component {...this.props} {...context} />}
+        </UserContext.Consumer>
+      );
+    }
+  };
+}
+
+export { logInWithUserContext, LogIn };
