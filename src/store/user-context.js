@@ -1,6 +1,6 @@
 import React from "react";
 
-export const UserContext = React.createContext({
+const UserContext = React.createContext({
   user: {
     name: "",
     photoUrl: ""
@@ -8,3 +8,5 @@ export const UserContext = React.createContext({
   submitLogin: () => {},
   submitLogout: () => {}
 });
+
+export default UserContext;

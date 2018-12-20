@@ -1,10 +1,10 @@
 import React from "react";
-import * as http from "../../services/http.js";
+import http from "../../services/http.js";
 import Panel from "../../components/Panel/Panel.js";
 import Button from "../../components/Button/Button.js";
 import Input from "../../components/Input/Input.js";
 import styles from "./Login.css";
-import { UserContext } from "../../store/user-context.js";
+import withUserContext from "../../store/withUserContext.js";
 
 class LogIn extends React.Component {
   constructor(props) {
@@ -33,9 +33,11 @@ class LogIn extends React.Component {
     });
 
     try {
+      const url = "https://us-central1-mercdev-academy.cloudfunctions.net/login";
+      const params = JSON.stringify({ email: this.state.email, password: this.state.password });
+
       const response = await http.post(
-        this.state.email,
-        this.state.password
+        url, params
       );
 
       const user = response;
@@ -80,7 +82,7 @@ class LogIn extends React.Component {
     return (
       <div>
         <Panel>
-          <h1 className={styles.block__headline}>Log In</h1>
+          <h1 className={styles.headline}>Log In</h1>
 
           <form onSubmit={this.submitForm} className="form">
             <Input
@@ -99,11 +101,11 @@ class LogIn extends React.Component {
               disabled={this.state.isSending}
               onChange={this.handleChangePassword}
               placeholder="Password"
-              className={styles.form__input_password}
+              className={styles.input_password}
             />
 
             <div
-              className={styles.form__error}
+              className={styles.error}
               style={
                 !this.state.error == ""
                   ? { display: "inline-block" }
@@ -121,16 +123,5 @@ class LogIn extends React.Component {
   }
 }
 
-function logInWithUserContext(Component) {
-  return class WithUserContext extends React.Component {
-    render() {
-      return (
-        <UserContext.Consumer>
-          {context => <Component {...this.props} {...context} />}
-        </UserContext.Consumer>
-      );
-    }
-  };
-}
-
-export { logInWithUserContext, LogIn };
+const LogInWithUserContext = withUserContext(LogIn);
+export default LogInWithUserContext;

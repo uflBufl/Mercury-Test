@@ -6,7 +6,7 @@ export default class Input extends React.Component {
   render() {
     const { className, ...otherProps } = this.props;
 
-    const inputClass = classNames(styles.form__input, className, {
+    const inputClass = classNames(styles.input, className, {
       [styles.errorChange]: this.props.isInvalid
     });
 

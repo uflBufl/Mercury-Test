@@ -1,4 +1,4 @@
-.block__headline {
+.headline {
   margin: 0;
   padding-top: 48px;
   height: 27px;
@@ -12,10 +12,10 @@
   letter-spacing: 0.2px;
   color: #262626;
 }
-.form__input_password {
+.input_password {
   margin: 32px 0px 0px 0px;
 }
-.form__error {
+.error {
   margin: 32px 0px 0px 0px;
   display: none;
   box-sizing: border-box;
@@ -32,16 +32,16 @@
 }
 
 @media screen and (max-width: 640px) {
-  .block__headline {
+  .headline {
     padding-top: 32px;
     height: 24px;
     font-size: 20px;
     letter-spacing: normal;
   }
-  .form__input_password {
+  .input_password {
     margin: 26px 0px 0px 0px;
   }
-  .form__error {
+  .error {
     margin: 24px 0px 0px 0px;
     width: calc(100% - 48px);
     padding: 12px 6px 8px 14px;
@@ -52,17 +52,17 @@
 }
 
 @media screen and (max-height: 640px) and (max-width: 1136px) and (orientation: landscape) {
-  .block__headline {
+  .headline {
     padding-top: 32px;
     height: 24px;
     font-size: 20px;
     letter-spacing: normal;
   }
 
-  .form__input_password {
+  .input_password {
     margin: 26px 0px 0px 0px;
   }
-  .form__error {
+  .error {
     margin: 24px 0px 0px 0px;
     width: calc(100% - 48px);
     padding: 12px 6px 8px 14px;

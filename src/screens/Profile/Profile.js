@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "../../components/Button/Button.js";
 import Panel from "../../components/Panel/Panel.js";
-import { UserContext } from "../../store/user-context.js";
+import withUserContext from "../../store/withUserContext.js";
 import styles from "./Profile.css";
 
  class Profile extends React.Component {
@@ -12,11 +12,11 @@ import styles from "./Profile.css";
             <form {...this.props} onSubmit={this.props.submitLogout}>
               <img
                 src={this.props.user.photoUrl}
-                className={styles.block__img}
+                className={styles.img}
               />
               <h1
-                className={`${styles.block__headline} ${
-                  styles.block__headline_name
+                className={`${styles.headline} ${
+                  styles.headline_name
                 }`}
                 id="UsName"
               >
@@ -25,8 +25,8 @@ import styles from "./Profile.css";
 
               <Button
                 value="Logout"
-                className={`${styles.form} ${
-                  styles.form__button_profile
+                className={`${styles.button__text} ${
+                  styles.button_profile
                 }`}
               />
             </form>
@@ -36,16 +36,5 @@ import styles from "./Profile.css";
   }
 }
 
-function profileWithUserContext(Component) {
-  return class WithUserContext extends React.Component {
-    render() {
-      return (
-        <UserContext.Consumer>
-          {context => <Component {...this.props} {...context} />}
-        </UserContext.Consumer>
-      );
-    }
-  };
-}
-
-export { profileWithUserContext, Profile };
+const ProfileWithUserContext = withUserContext(Profile);
+export default ProfileWithUserContext;
