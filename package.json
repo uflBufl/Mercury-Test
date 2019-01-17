@@ -13,6 +13,8 @@
   "devDependencies": {
     "@babel/cli": "^7.1.5",
     "@babel/core": "^7.2.0",
+    "@babel/plugin-proposal-class-properties": "^7.2.3",
+    "@babel/plugin-proposal-decorators": "^7.2.3",
     "@babel/plugin-transform-react-jsx": "^7.1.6",
     "@babel/preset-env": "^7.2.0",
     "@babel/preset-react": "^7.0.0",
@@ -29,7 +31,7 @@
     "style-loader": "^0.23.1",
     "webpack": "^4.27.1",
     "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^3.1.10"
+    "webpack-dev-server": "^3.1.14"
   },
   "dependencies": {
     "@babel/runtime": "^7.2.0",
@@ -37,9 +39,10 @@
     "classnames": "^2.2.6",
     "create-react-app": "^2.1.1",
     "history": "^4.7.2",
-    "mobx": "^5.8.0",
-    "react": "^16.6.3",
-    "react-dom": "^16.6.3",
+    "mobx": "^5.1.0",
+    "mobx-react": "^5.4.3",
+    "react": "^16.7.0-alpha.0",
+    "react-dom": "^16.7.0-alpha.0",
     "react-router-native": "^4.3.0",
     "styled-components": "^4.1.2"
   }
